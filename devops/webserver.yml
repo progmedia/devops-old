@@ -1,0 +1,77 @@
+---
+
+- hosts: webservers
+  user: vagrant
+  sudo: True
+
+  vars:
+    php_version: 5.5.4
+    php_ini_location: /etc/php-
+    php_download_url: http://www.php.net/distributions/php-
+    php_download_suffix: .tar.gz
+    php_fpm_user: www-data
+    php_fpm_group: www-data
+    php_fpm_pool_name: creo
+    nginx_version: 1.5.6
+    nginx_download_url: http://nginx.org/download/nginx-
+    nginx_download_suffix: .tar.gz
+    nginx_prefix: /usr/local/nginx-
+
+  tasks:
+    - name: update apt
+      action: command /usr/bin/apt-get update
+
+    - name: create fpm user
+      action: user name=${php_fpm_user}
+
+    - name: add user to group
+      action: user name=${php_fpm_user} groups=${php_fpm_group} append=true
+
+
+    - name: install web server packages
+      action: apt pkg=$item state=installed
+      with_items:
+        - build-essential
+        - automake
+        - bison
+        - curl
+        - libcurl4-openssl-dev
+        - flex
+        - gcc
+        - g++
+        - gettext
+        - libevent-dev
+        - libjpeg-dev
+        - libjpeg8
+        - libxml2-dev
+        - libxml2
+        - libxslt1-dev
+        - make
+        - libmagic-dev
+        - libmcrypt-dev
+        - libmcrypt4
+        - libmhash2
+        - libmhash-dev
+        - openssl
+        - libssl-dev
+        - libpcre3
+        - libpcre3-dev
+        - libpng12-dev
+        - libpng3
+        - re2c
+        - unzip
+        - wget
+        - zlib1g-dev
+        - libpcre3
+        - wget
+        - zlib1g
+
+    - include: php.yml
+    - include: nginx.yml
+
+  handlers:
+    - name: Restart nginx
+      command: service nginx restart
+
+    - name: Restart php5-fpm
+      command: service php5-fpm restart

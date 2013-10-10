@@ -1,0 +1,27 @@
+---
+
+- hosts: dbservers
+  user: vagrant
+  sudo: True
+
+  vars:
+    neo4j_version: 1.9.4
+    neo4j_download_url: http://dist.neo4j.org/neo4j-community-
+    neo4j_download_suffix: -unix.tar.gz
+    redis_version: 2.6.16
+    redis_download_url: http://download.redis.io/releases/redis-
+    redis_download_suffix: .tar.gz
+
+  tasks:
+    - name: update apt
+      action: command /usr/bin/apt-get update
+
+    - include: neo4j.yml
+    - include: redis.yml
+
+  handlers:
+    - name: Restart neo4j
+      command: /etc/init.d/neo4j-service restart
+
+    - name: Restart redis
+      command: /etc/init.d/redis_6379 restart
