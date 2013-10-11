@@ -1,7 +1,7 @@
 ---
 
 - name: Download PHP
-  command: curl -O ${php_download_url}${php_version}${php_download_suffix} chdir=/usr/src creates=/usr/src/${php_version}${php_download_suffix}
+  command: curl -O ${php_download_url}${php_version}${php_download_suffix} chdir=/usr/src creates=/usr/src/php-${php_version}${php_download_suffix}
 
 - name: Unzip PHP
   command: tar -xzf /usr/src/php-${php_version}${php_download_suffix} chdir=/usr/src creates=/usr/src/php-${php_version}
