@@ -71,7 +71,7 @@
 
   handlers:
     - name: Restart nginx
-      command: service nginx restart
+      command: service nginx stop && service nginx start
 
     - name: Restart php5-fpm
-      command: service php5-fpm restart
+      command: service php5-fpm stop && service php5-fpm start
