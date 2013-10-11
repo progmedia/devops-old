@@ -11,12 +11,10 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder "../client-application-bridge", "/vagrant/client-application-bridge/"
     config.vm.synced_folder "../www", "/vagrant/www/"
 
-    web_config.vm.provision :ansible do |ansible|
+    web_config.vm.provision "ansible" do |ansible|
       ansible.playbook = "devops/webserver.yml"
-      ansible.hosts = "webservers"
-      ansible.inventory_file = "devops/hosts"
-      ansible.verbosity = "-vvvv"
-      ansible.verbose = "-vvvv"
+      ansible.inventory_path = "devops/hosts"
+      ansible.verbose = "v"
     end
 
     web_config.vm.provider "virtualbox" do |v|
@@ -30,12 +28,10 @@ Vagrant.configure("2") do |config|
     db_config.vm.network "forwarded_port", guest: 7474, host: 8081
     db_config.vm.network "private_network", ip: "192.168.100.20"
 
-    db_config.vm.provision :ansible do |ansible|
+    db_config.vm.provision "ansible" do |ansible|
       ansible.playbook = "devops/dbserver.yml"
-      ansible.hosts = "dbservers"
-      ansible.inventory_file = "devops/hosts"
-      ansible.verbosity = "-vvvv"
-      ansible.verbose = "-vvvv"
+      ansible.inventory_path = "devops/hosts"
+      ansible.verbose = "v"
     end
 
     db_config.vm.provider "virtualbox" do |v|
