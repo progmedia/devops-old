@@ -6,6 +6,9 @@
 - name: Install Curl
   action: apt pkg=curl state=installed
 
+- name: Update /etc/security/limits.conf to raise open files count
+  template: src=templates/etc_security_limits.conf dest=/etc/security/limits.conf owner=root group=root mode=0644
+
 - name: Download Neo4j
   command: curl -O ${neo4j_download_url}${neo4j_version}${neo4j_download_suffix} chdir=/usr/lib creates=/usr/lib/neo4j-community-${neo4j_version}${neo4j_download_suffix}
 
