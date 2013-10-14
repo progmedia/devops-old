@@ -21,7 +21,7 @@
 
   handlers:
     - name: Restart neo4j
-      command: /etc/init.d/neo4j-service stop && /etc/init.d/neo4j-service start
+      action: service name=neo4j-service state=restarted
 
     - name: Restart redis
-      command: /etc/init.d/redis_6379 stop && /etc/init.d/redis_6379 start
+      action: service name=redis_6379 state=restarted

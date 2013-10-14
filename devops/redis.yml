@@ -26,5 +26,6 @@
 
 - name: Add Redis conf
   template: src=templates/redis.conf dest=/etc/redis/6379.conf
-  notify:
-    - Restart redis
+
+- name: Restart Redis
+  command: service redis_6379 restart

@@ -44,5 +44,6 @@
 
 - name: Add fpm init script
   template: src=templates/php5-fpm.init dest=/etc/init.d/php5-fpm owner=root group=root mode=0777
-  notify:
-    - Restart php5-fpm
+
+- name: Restart php5-fpm
+  command: service php5-fpm restart

@@ -21,7 +21,11 @@
 - name: mkdir /etc/neo4j-community-${neo4j_version}
   command: mkdir /etc/neo4j-community-${neo4j_version} creates=/etc/neo4j-community-${neo4j_version}
 
+- name: Update neo4j-server.properties
+  template: src=templates/neo4j-server.properties dest=/usr/lib/neo4j-community-${neo4j_version}/conf/neo4j-server.properties
+
 - name: Add Neo4j init script
   template: src=templates/neo4j.init dest=/etc/init.d/neo4j-service owner=root group=root mode=0777
-  notify:
-    - Restart neo4j
+
+- name: Restart Neo4j
+  command: service neo4j-service restart
