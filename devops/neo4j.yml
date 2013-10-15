@@ -27,5 +27,8 @@
 - name: Add Neo4j init script
   template: src=templates/neo4j.init dest=/etc/init.d/neo4j-service owner=root group=root mode=0777
 
+- name: Add Neo4j init to upstart
+  command: update-rc.d neo4j-service defaults
+
 - name: Restart Neo4j
   command: service neo4j-service restart

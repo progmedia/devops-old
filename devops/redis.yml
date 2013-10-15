@@ -21,8 +21,11 @@
 - name: Copy redis-cli to bin
   command: cp redis-cli /usr/local/bin/ chdir=/usr/lib/redis-${redis_version}/src creates=/usr/local/bin/redis-cli
 
-- name: Add Redis conf
+- name: Add Redis init script
   template: src=templates/redis.init dest=/etc/init.d/redis_6379 owner=root group=root mode=0777
+
+- name: Add Redis init to upstart
+  command: update-rc.d redis_6379 defaults
 
 - name: Add Redis conf
   template: src=templates/redis.conf dest=/etc/redis/6379.conf

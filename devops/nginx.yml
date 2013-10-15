@@ -60,5 +60,8 @@
 - name: Add nginx init script
   template: src=templates/nginx.init dest=/etc/init.d/nginx owner=root group=root mode=0777
 
+- name: Add nginx init script to upstart
+  command: update-rc.d nginx defaults
+
 - name: Restart Nginx
   command: service nginx restart
