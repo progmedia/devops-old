@@ -28,4 +28,4 @@
   template: src=templates/redis.conf dest=/etc/redis/6379.conf
 
 - name: Restart Redis
-  command: service redis_6379 restart
+  command: service redis_6379 stop && service redis_6379 start
