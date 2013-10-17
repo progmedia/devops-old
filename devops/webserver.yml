@@ -21,11 +21,11 @@
     - name: update apt
       action: command /usr/bin/apt-get update
 
-    - name: create fpm user
-      action: user name=${php_fpm_user}
+    # - name: create fpm user
+    #   action: user name=${php_fpm_user}
 
-    - name: add user to group
-      action: user name=${php_fpm_user} groups=${php_fpm_group} append=true
+    # - name: add user to group
+    #   action: user name=${php_fpm_user} groups=${php_fpm_group} append=true
 
 
     - name: install web server packages

@@ -1,25 +1,23 @@
+
 ---
 
-- name: Download PHP
-  command: curl -O ${php_download_url}${php_version}${php_download_suffix} chdir=/usr/src creates=/usr/src/php-${php_version}${php_download_suffix}
+# - name: Download PHP
+#   command: curl -O ${php_download_url}${php_version}${php_download_suffix} chdir=/usr/src creates=/usr/src/php-${php_version}${php_download_suffix}
 
-- name: Unzip PHP
-  command: tar -xzf /usr/src/php-${php_version}${php_download_suffix} chdir=/usr/src creates=/usr/src/php-${php_version}
+# - name: Unzip PHP
+#   command: tar -xzf /usr/src/php-${php_version}${php_download_suffix} chdir=/usr/src creates=/usr/src/php-${php_version}
 
-# - name: Clean the install directory
-#   command: make clean chdir=/usr/src/php-${php_version} creates=/usr/local/bin/php
+# - name: Configure PHP
+#   command: ./configure --with-config-file-path=${php_ini_location}${php_version} --enable-bcmath --enable-calendar --enable-exif --enable-ftp --enable-mbstring --enable-pcntl --enable-pdo --enable-zip --with-curl --with-gd --with-jpeg-dir=/usr --enable-fpm --with-fpm-user=${php_fpm_user} --with-fpm-group=${php_fpm_group} --with-libxml-dir --with-xsl --with-mcrypt --with-mhash --with-openssl --with-regex=system --with-zli --with-gettext --disable-fileinfo --with-mysqli --with-pdo-mysql=mysqlnd --enable-opcache creates=/usr/local/bin/php chdir=/usr/src/php-${php_version}
 
-- name: Configure PHP
-  command: ./configure --with-config-file-path=${php_ini_location}${php_version} --enable-bcmath --enable-calendar --enable-exif --enable-ftp --enable-mbstring --enable-pcntl --enable-pdo --enable-zip --with-curl --with-gd --with-jpeg-dir=/usr --enable-fpm --with-fpm-user=${php_fpm_user} --with-fpm-group=${php_fpm_group} --with-libxml-dir --with-xsl --with-mcrypt --with-mhash --with-openssl --with-regex=system --with-zli --with-gettext --disable-fileinfo --with-mysqli --with-pdo-mysql=mysqlnd --enable-opcache creates=/usr/local/bin/php chdir=/usr/src/php-${php_version}
+# - name: Make PHP
+#   command: make chdir=/usr/src/php-${php_version} creates=/usr/local/bin/php
 
-- name: Make PHP
-  command: make chdir=/usr/src/php-${php_version} creates=/usr/local/bin/php
+# - name: Install PHP
+#   command: make install chdir=/usr/src/php-${php_version} creates=/usr/local/bin/php
 
-- name: Install PHP
-  command: make install chdir=/usr/src/php-${php_version} creates=/usr/local/bin/php
-
-- name: Create php.ini location
-  command: mkdir ${php_ini_location}${php_version} creates=${php_ini_location}${php_version}
+# - name: Create php.ini location
+#   command: mkdir ${php_ini_location}${php_version} creates=${php_ini_location}${php_version}
 
 - name: Set php.ini
   action: copy src=templates/php.ini dest=${php_ini_location}${php_version}/php.ini owner=${php_fpm_user} group=${php_fpm_group}
