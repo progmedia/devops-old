@@ -1,3 +1,7 @@
 Host db.pro-gmedia.com
   StrictHostKeyChecking no
   UserKnownHostsFile=/dev/null
+
+Host 82.136.37.196
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
