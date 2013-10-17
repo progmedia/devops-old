@@ -1,0 +1,3 @@
+Host db.pro-gmedia.com
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null

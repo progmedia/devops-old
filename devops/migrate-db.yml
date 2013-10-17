@@ -15,6 +15,9 @@
     - name: Stop neo4j-service
       command: service neo4j-service stop
 
+    - name: Update SSH config
+      template: src=templates/ssh_config dest=/home/vagrant/.ssh/config
+
     - name: Remove the local data
       command: rm -rf graph.db/ chdir=${local_db_path}
 
