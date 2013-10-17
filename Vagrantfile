@@ -1,8 +1,8 @@
 Vagrant.configure("2") do |config|
 
   config.vm.define "web" do |web_config|
-    web_config.vm.box = "raring64"
-    web_config.vm.box_url = "https://dl.dropboxusercontent.com/s/9gpz5qh798mcq8x/raring64.box"
+    web_config.vm.box = "ubuntu64"
+    web_config.vm.box_url = "https://dl.dropboxusercontent.com/s/94f14lp7pavp3g8/ubuntu64.box"
     web_config.vm.network "forwarded_port", guest: 80, host: 8080
     web_config.vm.network "private_network", ip: "192.168.100.10"
 
@@ -23,8 +23,8 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "db" do |db_config|
-    db_config.vm.box = "raring64"
-    db_config.vm.box_url = "https://dl.dropboxusercontent.com/s/9gpz5qh798mcq8x/raring64.box"
+    db_config.vm.box = "ubuntu64"
+    db_config.vm.box_url = "https://dl.dropboxusercontent.com/s/94f14lp7pavp3g8/ubuntu64.box"
     db_config.vm.network "forwarded_port", guest: 7474, host: 8081
     db_config.vm.network "private_network", ip: "192.168.100.20"
 
