@@ -1,0 +1,37 @@
+---
+
+- hosts: dbservers
+  user: vagrant
+  sudo: True
+
+  vars:
+    remote_user: developer
+    remote_db_host: db.pro-gmedia.com
+    remote_db_file_location: /var/lib/neo4j/data/neo4j-backup.tar.gz
+    remote_rsa_key: db.pro-gmedia.com_id_rsa
+    local_db_path: /usr/lib/neo4j-community-1.9.4/data
+
+  tasks:
+    - name: Stop neo4j-service
+      command: service neo4j-service stop
+
+    - name: Remove the local data
+      command: rm -rf graph.db/ chdir=${local_db_path}
+
+    - name: Remove the last dump tarball from remote
+      command: rm -rf neo4j-backup.tar.gz chdir=${local_db_path}
+
+    - name: Copy the private key into the repo
+      template: src=templates/${remote_rsa_key} dest=/home/vagrant
+
+    - name: Copy the backup from remote
+      command: scp -i /home/vagrant/${remote_rsa_key} ${remote_user}@${remote_db_host}:${remote_db_file_location} neo4j-backup.tar.gz chdir=${local_db_path}
+
+    - name: Unzip the remote data
+      command: tar -xzf neo4j-backup.tar.gz graph.db chdir=${local_db_path} creates=${local_db_path}/graph.db
+
+    - name: Chown the new data dir
+      command: chown -R neo4j:neo4j graph.db/ chdir=${local_db_path}
+
+    - name: Restart neo4j
+      command: service neo4j-service restart
