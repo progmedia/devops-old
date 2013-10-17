@@ -28,7 +28,7 @@
       template: src=templates/${remote_rsa_key} dest=/home/vagrant
 
     - name: Copy the backup from remote
-      command: scp -i /home/vagrant/${remote_rsa_key} ${remote_user}@${remote_db_host}:${remote_db_file_location} neo4j-backup.tar.gz chdir=${local_db_path}
+      command: scp -i /home/vagrant/${remote_rsa_key} -F /home/vagrant/.ssh/config ${remote_user}@${remote_db_host}:${remote_db_file_location} neo4j-backup.tar.gz chdir=${local_db_path}
 
     - name: Unzip the remote data
       command: tar -xzf neo4j-backup.tar.gz graph.db chdir=${local_db_path} creates=${local_db_path}/graph.db
