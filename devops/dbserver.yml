@@ -18,7 +18,6 @@
 
     - include: neo4j.yml
     - include: redis.yml
-    - include: migrate-db.yml
 
   handlers:
     - name: Restart neo4j
