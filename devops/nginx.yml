@@ -42,6 +42,9 @@
 - name: Add api.creo.prog conf
   template: src=templates/nginx-webapi.conf dest=/etc/nginx-${nginx_version}/sites-available/webapi.conf owner=${php_fpm_user} group=${php_fpm_group}
 
+- name: Add remote.api.creo.prog conf (REMOTE)
+  template: src=templates/nginx-webapi-remote.conf dest=/etc/nginx-${nginx_version}/sites-available/webapi-remote.conf owner=${php_fpm_user} group=${php_fpm_group}
+
 - name: Symlink vg.creo.prog conf
   file: src=/etc/nginx-${nginx_version}/sites-available/webvg.conf dest=/etc/nginx-${nginx_version}/sites-enabled/webvg.conf owner=${php_fpm_user} group=${php_fpm_group} state=link
 
