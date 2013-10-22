@@ -48,3 +48,15 @@
 
 - name: Restart php5-fpm
   command: service php5-fpm restart
+
+- name: Remove old Composer
+  command: rm -f /usr/bin/composer
+
+- name: Install Composer
+  command: curl -O http://getcomposer.org/composer.phar chdir=/usr/bin creates=/usr/bin/composer.phar
+
+- name: Rename Composer
+  command: mv /usr/bin/composer.phar /usr/bin/composer creates=/usr/bin/composer
+
+- name: Chmod Composer
+  command: chmod +x /usr/bin/composer
