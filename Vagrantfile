@@ -25,7 +25,8 @@ Vagrant.configure("2") do |config|
   config.vm.define "db" do |db_config|
     db_config.vm.box = "ubuntu64"
     db_config.vm.box_url = "https://dl.dropboxusercontent.com/s/94f14lp7pavp3g8/ubuntu64.box"
-    db_config.vm.network "forwarded_port", guest: 7474, host: 8081
+    db_config.vm.network "forwarded_port", guest: 7474, host: 8081 # Neo4j webadmin
+    db_config.vm.network "forwarded_port", guest: 9200, host: 8082 # Elasticsearch HTTP
     db_config.vm.network "private_network", ip: "192.168.100.20"
 
     db_config.vm.provision "ansible" do |ansible|
