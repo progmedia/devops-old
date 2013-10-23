@@ -1,0 +1,13 @@
+#!/usr/bin/env php
+<?php
+ini_set('max_execution_time', '0');
+
+require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/parselog.php';
+
+use Symfony\Component\Console\Application;
+
+// go go go
+$application = new Application();
+$application->add(new \ParseLog\ParseLog());
+$application->run();
