@@ -54,6 +54,9 @@
 - name: Symlink api.creo.prog conf
   file: src=/etc/nginx-${nginx_version}/sites-available/webapi.conf dest=/etc/nginx-${nginx_version}/sites-enabled/webapi.conf owner=${php_fpm_user} group=${php_fpm_group} state=link
 
+- name: Symlink api.creo.prog conf
+  file: src=/etc/nginx-${nginx_version}/sites-available/webapi-remote.conf dest=/etc/nginx-${nginx_version}/sites-enabled/webapi-remote.conf owner=${php_fpm_user} group=${php_fpm_group} state=link
+
 - name: Make /web dir
   command: mkdir /web creates=/web
 
