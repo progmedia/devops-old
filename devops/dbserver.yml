@@ -21,7 +21,7 @@
 
     - include: neo4j.yml
     - include: redis.yml
-    - include: elastic.yml
+    #- include: elastic.yml
 
     - name: Set .bashrc
       action: copy src=templates/.bashrc-db dest=/home/vagrant/.bashrc owner=vagrant group=vagrant
