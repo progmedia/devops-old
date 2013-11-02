@@ -62,6 +62,9 @@
     - include: php.yml
     - include: nginx.yml
 
+    - name: Map API domain to localhost
+      command: echo '127.0.0.1 api.creo.prog' | tee -a /etc/hosts
+
     - name: Set .bashrc
       action: copy src=templates/.bashrc-web dest=/home/vagrant/.bashrc owner=vagrant group=vagrant
 
