@@ -63,7 +63,7 @@
     - include: nginx.yml
 
     - name: Set .bashrc
-      action: copy src=templates/.bashrc-web dest=/home/vagrant/.bashrc owner=vagrant group=vagrant
+      action: copy src=files/.bashrc-web dest=/home/vagrant/.bashrc owner=vagrant group=vagrant
 
   handlers:
     - name: Restart nginx

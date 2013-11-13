@@ -24,7 +24,7 @@
     #- include: elastic.yml
 
     - name: Set .bashrc
-      action: copy src=templates/.bashrc-db dest=/home/vagrant/.bashrc owner=vagrant group=vagrant
+      action: copy src=files/.bashrc-db dest=/home/vagrant/.bashrc owner=vagrant group=vagrant
 
   handlers:
     - name: Restart neo4j
