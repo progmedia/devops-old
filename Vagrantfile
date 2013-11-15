@@ -12,8 +12,8 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder "../www", "/vagrant/www/"
 
     web_config.vm.provision "ansible" do |ansible|
-      ansible.playbook = "devops/webserver.yml"
-      ansible.inventory_path = "devops/hosts"
+      ansible.playbook = "playbooks/webserver-dev.yml"
+      ansible.inventory_path = "hosts.ini"
       ansible.verbose = "v"
     end
 
@@ -30,8 +30,8 @@ Vagrant.configure("2") do |config|
     db_config.vm.network "private_network", ip: "192.168.100.20"
 
     db_config.vm.provision "ansible" do |ansible|
-      ansible.playbook = "devops/dbserver.yml"
-      ansible.inventory_path = "devops/hosts"
+      ansible.playbook = "playbooks/dbserver-dev.yml"
+      ansible.inventory_path = "hosts.ini"
       ansible.verbose = "v"
     end
 
