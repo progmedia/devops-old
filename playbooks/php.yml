@@ -20,19 +20,19 @@
 #   command: mkdir ${php_ini_location}${php_version} creates=${php_ini_location}${php_version}
 
 - name: Set php.ini
-  action: copy src=templates/php.ini dest=${php_ini_location}${php_version}/php.ini owner=${php_fpm_user} group=${php_fpm_group}
+  action: copy src=templates/php/php.ini dest=${php_ini_location}${php_version}/php.ini owner=${php_fpm_user} group=${php_fpm_group}
 
 - name: Create fpm location
   command: mkdir ${php_ini_location}${php_version}/fpm creates=${php_ini_location}${php_version}/fpm
 
 - name: Set fpm conf
-  template: src=templates/php-fpm.conf dest=${php_ini_location}${php_version}/fpm/php-fpm.conf owner=${php_fpm_user} group=${php_fpm_group}
+  template: src=templates/php/php-fpm.conf dest=${php_ini_location}${php_version}/fpm/php-fpm.conf owner=${php_fpm_user} group=${php_fpm_group}
 
 - name: Create pool location
   command: mkdir ${php_ini_location}${php_version}/fpm/pools creates=${php_ini_location}${php_version}/fpm/pools
 
 - name: Set fpm pool conf
-  template: src=templates/pool.conf dest=${php_ini_location}${php_version}/fpm/pools/pool.conf owner=${php_fpm_user} group=${php_fpm_group}
+  template: src=templates/php/pool.conf dest=${php_ini_location}${php_version}/fpm/pools/pool.conf owner=${php_fpm_user} group=${php_fpm_group}
 
 - name: Install xdebug
   command: pecl install xdebug creates=/usr/local/lib/php/extensions/no-debug-non-zts-20121212/xdebug.so
@@ -41,7 +41,7 @@
   ini_file: dest=${php_ini_location}${php_version}/php.ini section=PHP option=zend_extension value=xdebug.so
 
 - name: Add fpm init script
-  template: src=templates/php5-fpm.init dest=/etc/init.d/php5-fpm owner=root group=root mode=0777
+  template: src=templates/php/php5-fpm.init dest=/etc/init.d/php5-fpm owner=root group=root mode=0777
 
 - name: Add php5-fpm init script to upstart
   command: update-rc.d php5-fpm defaults

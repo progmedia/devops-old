@@ -16,16 +16,16 @@
   action: user name=neo4j
 
 - name: Update neo4j-wrapper.conf
-  template: src=templates/neo4j-wrapper.conf dest=/usr/lib/neo4j-community-${neo4j_version}/conf/neo4j-wrapper.conf
+  template: src=templates/neo4j/neo4j-wrapper.conf dest=/usr/lib/neo4j-community-${neo4j_version}/conf/neo4j-wrapper.conf
 
 - name: Update neo4j-server.properties
-  template: src=templates/neo4j-server.properties dest=/usr/lib/neo4j-community-${neo4j_version}/conf/neo4j-server.properties
+  template: src=templates/neo4j/neo4j-server.properties dest=/usr/lib/neo4j-community-${neo4j_version}/conf/neo4j-server.properties
 
 - name: Chown Neo4j lib
   command: chown -R neo4j:neo4j /usr/lib/neo4j-community-${neo4j_version}
 
 - name: Add Neo4j init script
-  template: src=templates/neo4j.init dest=/etc/init.d/neo4j-service owner=root group=root mode=0777
+  template: src=templates/neo4j/neo4j.init dest=/etc/init.d/neo4j-service owner=root group=root mode=0777
 
 - name: Add Neo4j init to upstart
   command: update-rc.d neo4j-service defaults
