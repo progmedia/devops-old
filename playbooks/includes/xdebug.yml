@@ -1,0 +1,7 @@
+---
+
+- name: Install xdebug
+  command: pecl install xdebug creates=/usr/local/lib/php/extensions/no-debug-non-zts-20121212/xdebug.so
+
+- name: Add xdebug to php.ini
+  ini_file: dest=${php_ini_location}${php_version}/php.ini section=PHP option=zend_extension value=xdebug.so

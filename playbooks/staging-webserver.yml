@@ -1,11 +1,11 @@
 ---
 
-- hosts: dev-webservers
-  user: vagrant
+- hosts: staging_webservers
+  user: developer
   sudo: True
 
   vars:
-    php_version: 5.5.4
+    php_version: 5.5.6
     php_ini_location: /etc/php-
     php_download_url: http://www.php.net/distributions/php-
     php_download_suffix: .tar.gz
@@ -59,12 +59,8 @@
         - wget
         - zlib1g
 
-    - include: php.yml
-    - include: nginx.yml
-    - include: nginx-dev.yml
-
-    - name: Set .bashrc
-      action: copy src=files/.bashrc-web dest=/home/vagrant/.bashrc owner=vagrant group=vagrant
+    - include: includes/php.yml
+    - include: includes/nginx.yml
 
   handlers:
     - name: Restart nginx

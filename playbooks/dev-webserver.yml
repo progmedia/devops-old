@@ -1,6 +1,6 @@
 ---
 
-- hosts: webservers
+- hosts: dev_webservers
   user: vagrant
   sudo: True
 
@@ -61,6 +61,7 @@
 
     - include: php.yml
     - include: nginx.yml
+    - include: nginx-dev.yml
 
     - name: Set .bashrc
       action: copy src=files/.bashrc-web dest=/home/vagrant/.bashrc owner=vagrant group=vagrant

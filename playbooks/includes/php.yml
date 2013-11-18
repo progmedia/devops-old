@@ -1,0 +1,22 @@
+---
+
+- name: Set php.ini
+  action: copy src=templates/php/php.ini dest=${php_ini_location}${php_version}/php.ini owner=${php_fpm_user} group=${php_fpm_group}
+
+- name: Create fpm location
+  command: mkdir ${php_ini_location}${php_version}/fpm creates=${php_ini_location}${php_version}/fpm
+
+- name: Set fpm conf
+  template: src=templates/php/php-fpm.conf dest=${php_ini_location}${php_version}/php-fpm.conf owner=${php_fpm_user} group=${php_fpm_group}
+
+- name: Create pool location
+  command: mkdir ${php_ini_location}${php_version}/pools creates=${php_ini_location}${php_version}/pools
+
+- name: Set fpm pool conf
+  template: src=templates/php/pool.conf dest=${php_ini_location}${php_version}/pools/pool.conf owner=${php_fpm_user} group=${php_fpm_group}
+
+- name: Add php5-fpm init script to upstart
+  command: update-rc.d php-${php_version}-fpm defaults
+
+- name: Restart php5-fpm
+  command: service php-${php_version}-fpm restart
