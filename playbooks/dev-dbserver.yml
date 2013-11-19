@@ -1,6 +1,6 @@
 ---
 
-- hosts: dev-dbservers
+- hosts: dev_dbservers
   user: vagrant
   sudo: True
 
@@ -19,9 +19,9 @@
     - name: update apt
       action: command /usr/bin/apt-get update
 
-    - include: neo4j.yml
-    - include: redis.yml
-    - include: elastic.yml
+    - include: includes/neo4j.yml
+    - include: includes/redis.yml
+    - include: includes/elastic.yml
 
     - name: Set .bashrc
       action: copy src=files/.bashrc-db dest=/home/vagrant/.bashrc owner=vagrant group=vagrant
