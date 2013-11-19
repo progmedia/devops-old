@@ -16,6 +16,9 @@
     nginx_download_url: http://nginx.org/download/nginx-
     nginx_download_suffix: .tar.gz
     nginx_prefix: /usr/local/nginx-
+    node_version: 0.10.22
+    node_download_url: http://nodejs.org/dist/v${node_version}/node-v${node_version}-linux-x64
+    node_download_suffix: .tar.gz
 
   tasks:
     - name: update apt
