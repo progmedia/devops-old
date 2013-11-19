@@ -57,6 +57,9 @@
 - name: Add migration script PHP include
   template: src=templates/php/migration-includes.php dest=/web/migration-includes.php owner=${php_fpm_user} group=${php_fpm_group}
 
+- name: Chmod migration script PHP include
+  command: chmod 777 /web/migration-includes.php
+
 - name: chown /web
   command: chown -R ${php_fpm_user}:${php_fpm_group} /web
 
