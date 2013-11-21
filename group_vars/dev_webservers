@@ -28,5 +28,5 @@ remote_fastcgi_param_elastic_port: 9200
 
 remote_fastcgi_param_server_env: dev
 
-auth_basic:
-auth_basic_user_file:
+auth_basic: ''
+auth_basic_user_file: ''
