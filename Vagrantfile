@@ -29,6 +29,8 @@ Vagrant.configure("2") do |config|
     db_config.vm.network "forwarded_port", guest: 9200, host: 8082 # Elasticsearch HTTP
     db_config.vm.network "private_network", ip: "192.168.100.20"
 
+    config.vm.synced_folder "../migration-scripts", "/vagrant/migrate/"
+
     db_config.vm.provision "ansible" do |ansible|
       ansible.playbook = "playbooks/dev-dbserver.yml"
       ansible.inventory_path = "hosts.ini"
