@@ -9,5 +9,8 @@
 - name: Install Elasticsearch
   command: sudo dpkg -i elasticsearch-${elastic_version}${elastic_download_suffix} chdir=/usr/lib creates=/var/lib/elasticsearch
 
+- name: Install Inquisitor
+  command: sudo ./plugin -install polyfractal/elasticsearch-inquisitor chdir=/usr/share/elasticsearch/bin creates=/usr/share/elasticsearch/plugins/inquisitor
+
 - name: Start Elasticsearch
   command: service elasticsearch start

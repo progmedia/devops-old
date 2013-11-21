@@ -1,0 +1,73 @@
+---
+
+- hosts: staging_webservers
+  user: developer
+  sudo: True
+
+  vars:
+    php_version: 5.5.6
+    php_ini_location: /etc/php-
+    php_download_url: http://www.php.net/distributions/php-
+    php_download_suffix: .tar.gz
+    php_fpm_user: www-data
+    php_fpm_group: www-data
+    php_fpm_pool_name: creo
+    nginx_version: 1.5.6
+    nginx_download_url: http://nginx.org/download/nginx-
+    nginx_download_suffix: .tar.gz
+    nginx_prefix: /usr/local/nginx-
+    node_version: 0.10.22
+    node_download_url: http://nodejs.org/dist/v${node_version}/node-v${node_version}-linux-x64
+    node_download_suffix: .tar.gz
+
+  tasks:
+    - name: update apt
+      action: command /usr/bin/apt-get update
+
+    - name: install web server packages
+      action: apt pkg=$item state=installed
+      with_items:
+        - build-essential
+        - automake
+        - bison
+        - curl
+        - libcurl4-openssl-dev
+        - flex
+        - gcc
+        - g++
+        - gettext
+        - libevent-dev
+        - libjpeg-dev
+        - libjpeg8
+        - libxml2-dev
+        - libxml2
+        - libxslt1-dev
+        - make
+        - libmagic-dev
+        - libmcrypt-dev
+        - libmcrypt4
+        - libmhash2
+        - libmhash-dev
+        - openssl
+        - libssl-dev
+        - libpcre3
+        - libpcre3-dev
+        - libpng12-dev
+        - libpng3
+        - re2c
+        - unzip
+        - wget
+        - zlib1g-dev
+        - libpcre3
+        - wget
+        - zlib1g
+
+    - include: includes/php.yml
+    - include: includes/nginx.yml
+
+  handlers:
+    - name: Restart nginx
+      command: service nginx stop && service nginx start
+
+    - name: Restart php5-fpm
+      command: service php5-fpm stop && service php5-fpm start

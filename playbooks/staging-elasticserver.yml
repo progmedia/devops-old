@@ -1,0 +1,38 @@
+---
+
+- hosts: staging_elasticservers
+  user: developer
+  sudo: True
+
+  vars:
+    elastic_version: 0.90.7
+    elastic_download_url: https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-
+    elastic_download_suffix: .deb
+
+  tasks:
+    - name: update apt
+      action: command /usr/bin/apt-get update
+
+    - include: includes/elastic.yml
+
+    - name: Clear old firewall rules
+      action: command /usr/sbin/ufw disable && /usr/sbin/ufw --force reset
+
+    - name: Set new default rules
+      action: command /usr/sbin/ufw $item
+      with_items:
+        - default deny incoming
+        - default deny outgoing
+        - allow ssh
+        - allow ntp
+
+    - name: Allow webservers access
+      action: command /usr/sbin/ufw allow proto tcp from $item to any port 9200
+      with_items:
+        - ${groups.staging_webservers}
+
+    - name: Enable firewall rules
+      action: command /usr/sbin/ufw --force enable
+
+    - name: Set .bashrc
+      action: copy src=files/.bashrc-db dest=/home/developer/.bashrc owner=developer group=developer

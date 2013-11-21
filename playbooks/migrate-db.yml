@@ -16,7 +16,7 @@
       command: service neo4j-service stop
 
     - name: Update SSH config
-      template: src=templates/ssh_config dest=/home/vagrant/.ssh/config
+      template: src=files/ssh_config dest=/home/vagrant/.ssh/config
 
     - name: Remove the local data
       command: rm -rf graph.db/ chdir=${local_db_path}
@@ -25,7 +25,7 @@
       command: rm -rf neo4j-backup.tar.gz chdir=${local_db_path}
 
     - name: Copy the private key into the repo
-      template: src=templates/${remote_rsa_key} dest=/home/vagrant
+      template: src=files/${remote_rsa_key} dest=/home/vagrant
 
     - name: Copy the backup from remote
       command: scp -i /home/vagrant/${remote_rsa_key} -F /home/vagrant/.ssh/config ${remote_user}@${remote_db_host}:${remote_db_file_location} neo4j-backup.tar.gz chdir=${local_db_path}

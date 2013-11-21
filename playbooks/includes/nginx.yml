@@ -31,46 +31,40 @@
   command: make install chdir=/usr/src/nginx-${nginx_version} creates=${nginx_prefix}${nginx_version}/sbin/nginx
 
 - name: Update nginx.conf
-  template: src=templates/nginx.conf dest=/etc/nginx-${nginx_version}/nginx.conf owner=${php_fpm_user} group=${php_fpm_group}
+  template: src=templates/nginx/nginx.conf dest=/etc/nginx-${nginx_version}/nginx.conf owner=${php_fpm_user} group=${php_fpm_group}
 
 - name: Add vg.creo.prog conf
-  template: src=templates/nginx-webvg.conf dest=/etc/nginx-${nginx_version}/sites-available/webvg.conf owner=${php_fpm_user} group=${php_fpm_group}
-
-- name: Add vg.creo.prog conf (REMOTE)
-  template: src=templates/nginx-webvg-remote.conf dest=/etc/nginx-${nginx_version}/sites-available/webvg-remote.conf owner=${php_fpm_user} group=${php_fpm_group}
+  template: src=templates/nginx/webvg.conf dest=/etc/nginx-${nginx_version}/sites-available/webvg.conf owner=${php_fpm_user} group=${php_fpm_group}
 
 - name: Add api.creo.prog conf
-  template: src=templates/nginx-webapi.conf dest=/etc/nginx-${nginx_version}/sites-available/webapi.conf owner=${php_fpm_user} group=${php_fpm_group}
-
-- name: Add remote.api.creo.prog conf (REMOTE)
-  template: src=templates/nginx-webapi-remote.conf dest=/etc/nginx-${nginx_version}/sites-available/webapi-remote.conf owner=${php_fpm_user} group=${php_fpm_group}
+  template: src=templates/nginx/webapi.conf dest=/etc/nginx-${nginx_version}/sites-available/webapi.conf owner=${php_fpm_user} group=${php_fpm_group}
 
 - name: Symlink vg.creo.prog conf
   file: src=/etc/nginx-${nginx_version}/sites-available/webvg.conf dest=/etc/nginx-${nginx_version}/sites-enabled/webvg.conf owner=${php_fpm_user} group=${php_fpm_group} state=link
 
-- name: Symlink vg.creo.prog conf (REMOTE)
-  file: src=/etc/nginx-${nginx_version}/sites-available/webvg-remote.conf dest=/etc/nginx-${nginx_version}/sites-enabled/webvg-remote.conf owner=${php_fpm_user} group=${php_fpm_group} state=link
-
 - name: Symlink api.creo.prog conf
   file: src=/etc/nginx-${nginx_version}/sites-available/webapi.conf dest=/etc/nginx-${nginx_version}/sites-enabled/webapi.conf owner=${php_fpm_user} group=${php_fpm_group} state=link
-
-- name: Symlink api.creo.prog conf
-  file: src=/etc/nginx-${nginx_version}/sites-available/webapi-remote.conf dest=/etc/nginx-${nginx_version}/sites-enabled/webapi-remote.conf owner=${php_fpm_user} group=${php_fpm_group} state=link
 
 - name: Make /web dir
   command: mkdir /web creates=/web
 
-- name: Symlink /vagrant/www/videogamer-client-application to /web/vg.creo.prog
-  command: ln -s /vagrant/www/videogamer-client-application /web/videogamer-client-application creates=/web/videogamer-client-application
+- name: Symlink /vagrant/www/videogamer-client-application to ${vg_web_root}
+  command: ln -s /vagrant/www/videogamer-client-application ${vg_web_root} creates=${vg_web_root}
 
-- name: Symlink /vagrant/www/creo-api-application to /web/api.creo.prog
-  command: ln -s /vagrant/www/creo-api-application /web/creo-api-application creates=/web/creo-api-application
+- name: Symlink /vagrant/www/creo-api-application to ${api_web_root}
+  command: ln -s /vagrant/www/creo-api-application ${api_web_root} creates=${api_web_root}
+
+- name: Add migration script PHP include
+  template: src=templates/php/migration-includes.php dest=/web/migration-includes.php owner=${php_fpm_user} group=${php_fpm_group}
+
+- name: Chmod migration script PHP include
+  command: chmod 777 /web/migration-includes.php
 
 - name: chown /web
-  command: chown -R www-data:www-data /web
+  command: chown -R ${php_fpm_user}:${php_fpm_group} /web
 
 - name: Add nginx init script
-  template: src=templates/nginx.init dest=/etc/init.d/nginx owner=root group=root mode=0777
+  template: src=templates/nginx/nginx.init dest=/etc/init.d/nginx owner=root group=root mode=0777
 
 - name: Add nginx init script to upstart
   command: update-rc.d nginx defaults

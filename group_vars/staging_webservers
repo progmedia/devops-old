@@ -1,0 +1,14 @@
+vg_domain: staging.videogamer.com
+api_domain: api.staging.pro-gmedia.com
+
+vg_web_root: /web/videogamer-client-application/public
+api_web_root: /web/creo-api-application/public
+
+fastcgi_param_cache_host: ${groups.staging_redisservers[0]}
+fastcgi_param_cache_port: 6379
+fastcgi_param_neo_host: ${groups.staging_neo4jservers[0]}
+fastcgi_param_neo_port: 7474
+fastcgi_param_elastic_host: ${groups.staging_elasticservers[0]}
+fastcgi_param_elastic_port: 9200
+
+fastcgi_param_server_env: dev
