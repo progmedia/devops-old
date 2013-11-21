@@ -60,6 +60,9 @@
 - name: Add htpasswd file
   template: src=files/htpasswd dest=/web/htpasswd owner=${php_fpm_user} group=${php_fpm_group}
 
+- name: Add API domain to hosts file
+  lineinfile: dest=/etc/hosts regexp=^${api_domain}= line='127.0.0.1   ${api_domain}'
+
 - name: Chmod migration script PHP include
   command: chmod 777 /web/migration-includes.php
 
