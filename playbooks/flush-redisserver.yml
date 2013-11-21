@@ -1,0 +1,9 @@
+---
+
+- hosts: staging_redisservers
+  user: developer
+
+  tasks:
+
+    - name: FLush redis
+      command: redis-cli FLUSHALL

@@ -12,5 +12,8 @@
 - name: Symlink api.creo.prog conf (REMOTE)
   file: src=/etc/nginx-${nginx_version}/sites-available/webapi-remote.conf dest=/etc/nginx-${nginx_version}/sites-enabled/webapi-remote.conf owner=${php_fpm_user} group=${php_fpm_group} state=link
 
+- name: Add remote API domain to hosts file
+  lineinfile: dest=/etc/hosts regexp=^${remote_api_domain}= line='127.0.0.1   ${remote_api_domain}'
+
 - name: Restart Nginx
   command: service nginx restart
