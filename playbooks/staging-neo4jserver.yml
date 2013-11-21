@@ -25,7 +25,6 @@
       action: command /usr/sbin/ufw $item
       with_items:
         - default deny incoming
-        - default deny outgoing
         - allow ssh
         - allow ntp
 
@@ -33,6 +32,7 @@
       action: command /usr/sbin/ufw allow proto tcp from $item to any port 7474
       with_items:
         - ${groups.staging_webservers}
+        - 82.136.1.154
 
     - name: Enable firewall rules
       action: command /usr/sbin/ufw --force enable

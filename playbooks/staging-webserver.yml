@@ -65,6 +65,21 @@
     - include: includes/php.yml
     - include: includes/nginx.yml
 
+    - name: Clear old firewall rules
+      action: command /usr/sbin/ufw disable && /usr/sbin/ufw --force reset
+
+    - name: Set new default rules
+      action: command /usr/sbin/ufw $item
+      with_items:
+        - default deny incoming
+        - allow ssh
+        - allow ntp
+
+    - name: Allow webservers access
+      action: command /usr/sbin/ufw allow proto tcp from $item to any port 80
+      with_items:
+        - 82.136.1.154
+
   handlers:
     - name: Restart nginx
       command: service nginx stop && service nginx start
