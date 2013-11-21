@@ -64,6 +64,7 @@
 
     - include: includes/php.yml
     - include: includes/nginx.yml
+    - include: includes/node.yml
 
     - name: Clear old firewall rules
       action: command /usr/sbin/ufw disable && /usr/sbin/ufw --force reset

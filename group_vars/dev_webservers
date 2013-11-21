@@ -10,6 +10,8 @@ api_web_root: /web/creo-api-application
 api_app_url: http://api.creo.prog
 remote_api_app_url: http://remote.api.creo.prog
 
+static_url: http://s.pro-gmedia.com
+
 fastcgi_param_cache_host: ${groups.dev_dbservers[0]}
 fastcgi_param_cache_port: 6379
 fastcgi_param_neo_host: ${groups.dev_dbservers[0]}
