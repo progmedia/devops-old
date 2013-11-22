@@ -1,22 +1,42 @@
 ---
 
 - name: Set php.ini
-  action: copy src=templates/php/php.ini dest=${php_ini_location}${php_version}/php.ini owner=${php_fpm_user} group=${php_fpm_group}
+  action: >
+    copy src=templates/php/php.ini
+    dest=${php_ini_location}${php_version}/php.ini
+    owner=${php_fpm_user}
+    group=${php_fpm_group}
 
 - name: Create fpm location
-  command: mkdir ${php_ini_location}${php_version}/fpm creates=${php_ini_location}${php_version}/fpm
+  command: >
+    mkdir ${php_ini_location}${php_version}/fpm
+    creates=${php_ini_location}${php_version}/fpm
 
 - name: Set fpm conf
-  template: src=templates/php/php-fpm.conf dest=${php_ini_location}${php_version}/php-fpm.conf owner=${php_fpm_user} group=${php_fpm_group}
+  template: >
+    src=templates/php/php-fpm.conf
+    dest=${php_ini_location}${php_version}/php-fpm.conf
+    owner=${php_fpm_user}
+    group=${php_fpm_group}
 
 - name: Create pool location
-  command: mkdir ${php_ini_location}${php_version}/pools creates=${php_ini_location}${php_version}/pools
+  command: >
+    mkdir ${php_ini_location}${php_version}/pools
+    creates=${php_ini_location}${php_version}/pools
 
 - name: Set fpm pool conf
-  template: src=templates/php/pool.conf dest=${php_ini_location}${php_version}/pools/pool.conf owner=${php_fpm_user} group=${php_fpm_group}
+  template: >
+    src=templates/php/pool.conf
+    dest=${php_ini_location}${php_version}/pools/pool.conf
+    owner=${php_fpm_user}
+    group=${php_fpm_group}
 
 - name: Set init script
-  template: src=templates/php/php5-fpm.init dest=/etc/init.d/php-${php_version}-fpm owner=root group=root
+  template: >
+    src=templates/php/php5-fpm.init
+    dest=/etc/init.d/php-${php_version}-fpm
+    owner=root
+    group=root
 
 - name: Chmod init script
   command: chmod +x /etc/init.d/php-${php_version}-fpm
