@@ -1,16 +1,27 @@
 ---
 
 - name: Install Java
-  action: apt pkg=openjdk-7-jre-headless state=installed
+  action: >
+    apt pkg=openjdk-7-jre-headless
+    state=installed
 
 - name: Download Elasticsearch
-  command: curl -O ${elastic_download_url}${elastic_version}${elastic_download_suffix} chdir=/usr/lib creates=/usr/lib/elasticsearch-${elastic_version}${elastic_download_suffix}
+  command: >
+    curl -O ${elastic_download_url}${elastic_version}${elastic_download_suffix}
+    chdir=/usr/lib
+    creates=/usr/lib/elasticsearch-${elastic_version}${elastic_download_suffix}
 
 - name: Install Elasticsearch
-  command: sudo dpkg -i elasticsearch-${elastic_version}${elastic_download_suffix} chdir=/usr/lib creates=/var/lib/elasticsearch
+  command: >
+    sudo dpkg -i elasticsearch-${elastic_version}${elastic_download_suffix}
+    chdir=/usr/lib
+    creates=/var/lib/elasticsearch
 
 - name: Install Inquisitor
-  command: sudo ./plugin -install polyfractal/elasticsearch-inquisitor chdir=/usr/share/elasticsearch/bin creates=/usr/share/elasticsearch/plugins/inquisitor
+  command: >
+    sudo ./plugin -install polyfractal/elasticsearch-inquisitor
+    chdir=/usr/share/elasticsearch/bin
+    creates=/usr/share/elasticsearch/plugins/inquisitor
 
 - name: Start Elasticsearch
   command: service elasticsearch start

@@ -1,19 +1,34 @@
 ---
 
 - name: Download Node
-  command: curl -O ${node_download_url}${node_download_suffix} chdir=/usr/local creates=/usr/local/node-v${node_version}-linux-x64${node_download_suffix}
+  command: >
+    curl -O ${node_download_url}${node_download_suffix}
+    chdir=/usr/local
+    creates=/usr/local/node-v${node_version}-linux-x64${node_download_suffix}
 
 - name: Extract node
-  command: tar -xzf node-v${node_version}-linux-x64${node_download_suffix} chdir=/usr/local removes=/usr/local/node-v${node_version}-linux-x64${node_download_suffix}
+  command: >
+    tar -xzf node-v${node_version}-linux-x64${node_download_suffix}
+    chdir=/usr/local
+    removes=/usr/local/node-v${node_version}-linux-x64${node_download_suffix}
 
 - name: Move into node/
-  command: mv node-v${node_version}-linux-x64 node chdir=/usr/local creates=/usr/local/node
+  command: >
+    mv node-v${node_version}-linux-x64 node
+    chdir=/usr/local
+    creates=/usr/local/node
 
 - name: Install Bower
-  command: /usr/local/node/bin/npm install -g bower creates=/usr/local/node/bin/bower
+  command: >
+    /usr/local/node/bin/npm install -g bower
+    creates=/usr/local/node/bin/bower
 
 - name: Install Grunt
-  command: /usr/local/node/bin/npm install -g grunt creates=/usr/local/node/lib/node_modules/grunt
+  command: >
+    /usr/local/node/bin/npm install -g grunt
+    creates=/usr/local/node/lib/node_modules/grunt
 
 - name: Install grunt-cli
-  command: /usr/local/node/bin/npm install -g grunt-cli creates=/usr/local/node/bin/grunt
+  command: >
+    /usr/local/node/bin/npm install -g grunt-cli
+    creates=/usr/local/node/bin/grunt
