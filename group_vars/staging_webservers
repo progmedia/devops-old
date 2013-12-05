@@ -15,7 +15,7 @@ fastcgi_param_neo_port: 7474
 fastcgi_param_elastic_host: ${groups.staging_elasticservers[0]}
 fastcgi_param_elastic_port: 9200
 
-fastcgi_param_server_env: dev
+fastcgi_param_http_env: dev
 
 auth_basic: auth_basic "Area 52";
 auth_basic_user_file: auth_basic_user_file /web/htpasswd;
