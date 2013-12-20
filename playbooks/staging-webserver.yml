@@ -73,6 +73,7 @@
       action: command /usr/sbin/ufw $item
       with_items:
         - default deny incoming
+        - default allow outgoing
         - allow ssh
         - allow ntp
 
