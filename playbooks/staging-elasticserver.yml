@@ -22,6 +22,7 @@
       action: command /usr/sbin/ufw $item
       with_items:
         - default deny incoming
+        - default allow outgoing
         - allow ssh
         - allow ntp
 
@@ -29,6 +30,7 @@
       action: command /usr/sbin/ufw allow proto tcp from $item to any port 9200
       with_items:
         - ${groups.staging_webservers}
+        - ${groups.jenkins}
         - 82.136.1.154
 
     - name: Enable firewall rules
