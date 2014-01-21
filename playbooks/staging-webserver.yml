@@ -62,7 +62,10 @@
         - wget
         - zlib1g
 
-    - include: includes/php.yml
+    # - include: includes/php.yml
+    - include: includes/newrelic.yml
+    - include: includes/newrelic-php.yml
+    - include: includes/newrelic-nginx.yml
     - include: includes/nginx.yml
     - include: includes/node.yml
 

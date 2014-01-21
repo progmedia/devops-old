@@ -1,0 +1,32 @@
+---
+
+- name: Install Ruby-Bundler (and Ruby)
+  action: >
+    apt pkg=ruby-bundler
+    state=installed
+
+- name: Download Newrelic daemeon
+  command: >
+    curl -O http://nginx.com/download/newrelic/newrelic_nginx_agent.tar.gz
+    chdir=/usr/lib
+    creates=/usr/lib/newrelic_nginx_agent.tar.gz
+
+- name: Unzip Newrelic daemeon
+  command: >
+    tar -xzf /usr/lib/newrelic_nginx_agent.tar.gz
+    chdir=/usr/lib
+    creates=/usr/lib/newrelic_nginx_agent
+
+- name: Bundle install
+  command: >
+    bundle install
+    chdir=/usr/lib/newrelic_nginx_agent
+    creates=/usr/lib/newrelic_nginx_agent/Gemfile.lock
+
+- name: Add config
+  template: >
+    src=templates/newrelic/nginx_plugin.yml
+    dest=/usr/lib/newrelic_nginx_agent/config/newrelic_plugin.yml
+
+- name: Run daemon
+  command: /usr/lib/newrelic_nginx_agent/newrelic_nginx_agent.daemon start
