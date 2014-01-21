@@ -39,7 +39,7 @@
 
 - name: Configure Nginx
   command: >
-    ./configure --prefix=${nginx_prefix}${nginx_version} --pid-path=${nginx_prefix}${nginx_version}/logs/nginx.pid --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --conf-path=/etc/nginx-${nginx_version}/nginx.conf --with-pcre --with-http_ssl_module --with-http_realip_module
+    ./configure --prefix=${nginx_prefix}${nginx_version} --pid-path=${nginx_prefix}${nginx_version}/logs/nginx.pid --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --conf-path=/etc/nginx-${nginx_version}/nginx.conf --with-pcre --with-http_ssl_module --with-http_realip_module --with-http_stub_status_module
     chdir=/usr/src/nginx-${nginx_version}
     creates=${nginx_prefix}${nginx_version}/sbin/nginx
 
