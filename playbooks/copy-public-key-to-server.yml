@@ -1,0 +1,9 @@
+---
+
+- hosts: staging_all
+  remote_user: ansible
+
+  tasks:
+
+    - name: Add RSA key to the remote host
+      authorized_key: user=ansible key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
