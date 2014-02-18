@@ -19,7 +19,7 @@
       command: service nginx stop
 
     - name: Remove the old symlink if it exists
-      command: rm ${symlink_file} 2>/dev/null
+      command: rm -f ${symlink_file}
 
     - name: mkdir new_folder
       command: mkdir ${new_folder}
