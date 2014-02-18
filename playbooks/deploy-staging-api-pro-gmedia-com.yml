@@ -5,7 +5,7 @@
   sudo: true
 
   vars:
-    new_folder: "staging-api-pro-gmedia.com-{{ lookup('pipe','date +%s') }}"
+    new_folder: "staging-api-pro-gmedia.com-{{ lookup('pipe','date +%Y%m%d-%H%M') }}"
     tarball_file: staging-api-pro-gmedia-com.tar.gz
     symlink_file: staging-api-pro-gmedia.com-latest
 
