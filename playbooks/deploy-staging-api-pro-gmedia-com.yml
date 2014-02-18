@@ -8,6 +8,8 @@
     new_folder: "staging-api-pro-gmedia.com-{{ lookup('pipe','date +%Y%m%d-%H%M') }}"
     tarball_file: staging-api-pro-gmedia-com.tar.gz
     symlink_file: staging-api-pro-gmedia.com-latest
+    php_fpm_user: www-data
+    php_fpm_group: www-data
 
   tasks:
     - name: Copy the staging-api-pro-gmedia-com.tar.gz to the webserver
