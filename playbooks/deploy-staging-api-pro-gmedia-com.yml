@@ -5,7 +5,7 @@
   sudo: true
 
   vars:
-    new_folder: staging-api-pro-gmedia.com-$(date +%s)
+    new_folder: staging-api-pro-gmedia.com-${date +%s}
     tarball_file: staging-api-pro-gmedia-com.tar.gz
     symlink_file: staging-api-pro-gmedia.com-latest
 
