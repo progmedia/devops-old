@@ -1,14 +1,14 @@
 vg_domain: vg.creo.prog
 api_domain: api.creo.prog
 
-remote_vg_domain: remote.vg.creo.prog
-remote_api_domain: remote.api.creo.prog
+remote_vg_domain: remote.${vg_domain}
+remote_api_domain: remote.${api_domain}
 
-vg_web_root: /web/videogamer-client-application
-api_web_root: /web/creo-api-application
+vg_web_root: /web/${vg_domain}
+api_web_root: /web/${api_domain}
 
-api_app_url: http://api.creo.prog
-remote_api_app_url: http://remote.api.creo.prog
+api_app_url: http://${api_domain}
+remote_api_app_url: http://remote.${api_domain}
 
 static_url: http://s.pro-gmedia.com
 

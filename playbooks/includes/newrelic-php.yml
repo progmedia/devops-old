@@ -3,19 +3,13 @@
 - name: Install NewRelic PHP client
   action: apt pkg=newrelic-php5 state=installed
 
-- name: Add newrelic license ini setting
-  ini_file: >
-    dest=${php_ini_location}${php_version}/php.ini
-    section=PHP
-    option=newrelic.license
-    value="acc3318fc8af864fc7057bb767c5b4db9646eb58"
-
 - name: Add newrelic application name ini setting
   ini_file: >
-    dest=${php_ini_location}${php_version}/php.ini
+    dest=${php_ini_location}/php.ini
     section=PHP
     option=newrelic.appname
     value="php-${ansible_eth0.ipv4.address}"
+    state=present
 
 - name: Restart PHP-FPM
   command: service php-${php_version}-fpm restart

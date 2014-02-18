@@ -6,13 +6,13 @@
 
   vars:
     php_version: 5.5.6
-    php_ini_location: /etc/php-
+    php_ini_location: /etc/php-5.5.6
     php_download_url: http://www.php.net/distributions/php-
     php_download_suffix: .tar.gz
     php_fpm_user: www-data
     php_fpm_group: www-data
     php_fpm_pool_name: creo
-    nginx_version: 1.5.6
+    nginx_version: 1.5.8
     nginx_download_url: http://nginx.org/download/nginx-
     nginx_download_suffix: .tar.gz
     nginx_prefix: /usr/local/nginx-

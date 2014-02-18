@@ -25,7 +25,7 @@
 
 - name: Add config
   template: >
-    src=templates/newrelic/nginx_plugin.yml
+    src=templates/usr/lib/newrelic_nginx_agent/config/nginx_plugin.yml
     dest=/usr/lib/newrelic_nginx_agent/config/newrelic_plugin.yml
 
 - name: Run daemon

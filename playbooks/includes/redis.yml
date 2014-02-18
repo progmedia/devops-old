@@ -41,7 +41,7 @@
 
 - name: Add Redis init script
   template: >
-    src=templates/redis/redis.init
+    src=templates/etc/init.d/redis.init
     dest=/etc/init.d/redis_6379
     owner=root
     group=root
@@ -52,7 +52,7 @@
 
 - name: Add Redis conf
   template: >
-    src=templates/redis/redis.conf
+    src=templates/etc/redis/redis.conf
     dest=/etc/redis/6379.conf
 
 - name: Stop Redis

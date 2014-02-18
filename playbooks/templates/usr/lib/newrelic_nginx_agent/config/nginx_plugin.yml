@@ -15,4 +15,4 @@ newrelic:
 agents:
   nginx_status_agent:
     - instance_name: localhost
-      status_url: http://{{ remote_api_domain }}/nginx_status
+      status_url: http://{{ api_domain }}/nginx_status

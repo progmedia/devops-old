@@ -55,46 +55,63 @@
 
 - name: Update nginx.conf
   template: >
-    src=templates/nginx/nginx.conf
+    src=templates/etc/nginx/nginx.conf
     dest=/etc/nginx-${nginx_version}/nginx.conf
     owner=${php_fpm_user}
     group=${php_fpm_group}
 
 - name: Add vg.creo.prog conf
   template: >
-    src=templates/nginx/webvg.conf
+    src=templates/etc/nginx/sites-available/webvg.conf
     dest=/etc/nginx-${nginx_version}/sites-available/webvg.conf
     owner=${php_fpm_user}
     group=${php_fpm_group}
 
 - name: Add api.creo.prog conf
-  template: src=templates/nginx/webapi.conf dest=/etc/nginx-${nginx_version}/sites-available/webapi.conf owner=${php_fpm_user} group=${php_fpm_group}
+  template: >
+    src=templates/etc/nginx/sites-available/webapi.conf
+    dest=/etc/nginx-${nginx_version}/sites-available/webapi.conf
+    owner=${php_fpm_user}
+    group=${php_fpm_group}
 
 - name: Symlink vg.creo.prog conf
-  file: src=/etc/nginx-${nginx_version}/sites-available/webvg.conf dest=/etc/nginx-${nginx_version}/sites-enabled/webvg.conf owner=${php_fpm_user} group=${php_fpm_group} state=link
+  file: >
+    src=/etc/nginx-${nginx_version}/sites-available/webvg.conf
+    dest=/etc/nginx-${nginx_version}/sites-enabled/webvg.conf
+    owner=${php_fpm_user}
+    group=${php_fpm_group}
+    state=link
 
 - name: Symlink api.creo.prog conf
-  file: src=/etc/nginx-${nginx_version}/sites-available/webapi.conf dest=/etc/nginx-${nginx_version}/sites-enabled/webapi.conf owner=${php_fpm_user} group=${php_fpm_group} state=link
+  file: >
+    src=/etc/nginx-${nginx_version}/sites-available/webapi.conf
+    dest=/etc/nginx-${nginx_version}/sites-enabled/webapi.conf
+    owner=${php_fpm_user}
+    group=${php_fpm_group}
+    state=link
+
+- name: Remove old web directory
+  command: rm -rf /web
 
 - name: Make /web dir
   command: mkdir /web creates=/web
 
-- name: Symlink /vagrant/www/videogamer-client-application to ${vg_web_root}
-  command: ln -s /vagrant/www/videogamer-client-application ${vg_web_root} creates=${vg_web_root}
+- name: Make /web/staging.videogamer.com dir
+  command: mkdir /web creates=/web/staging.videogamer.com
 
-- name: Symlink /vagrant/www/creo-api-application to ${api_web_root}
-  command: ln -s /vagrant/www/creo-api-application ${api_web_root} creates=${api_web_root}
+- name: Make /web/staging.api.pro-gmedia.com dir
+  command: mkdir /web creates=/web/staging.api.pro-gmedia.com
 
 - name: Add migration script PHP include
   template: >
-    src=templates/php/migration-includes.php
+    src=templates/web/migration-includes.php
     dest=/web/migration-includes.php
     owner=${php_fpm_user}
     group=${php_fpm_group}
 
 - name: Add htpasswd file
   template: >
-    src=files/htpasswd
+    src=templates/web/htpasswd
     dest=/web/htpasswd
     owner=${php_fpm_user}
     group=${php_fpm_group}
@@ -113,7 +130,7 @@
 
 - name: Add nginx init script
   template: >
-    src=templates/nginx/nginx.init
+    src=templates/etc/init.d/nginx.init
     dest=/etc/init.d/nginx
     owner=root
     group=root

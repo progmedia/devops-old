@@ -1,18 +1,18 @@
 ---
 
 - hosts: staging_webservers
-  user: developer
+  user: ansible
   sudo: True
 
   vars:
-    php_version: 5.5.6
-    php_ini_location: /etc/php-
+    php_version: 5.5.9
+    php_ini_location: /etc/php-5.5
     php_download_url: http://www.php.net/distributions/php-
     php_download_suffix: .tar.gz
     php_fpm_user: www-data
     php_fpm_group: www-data
     php_fpm_pool_name: creo
-    nginx_version: 1.5.6
+    nginx_version: 1.5.8
     nginx_download_url: http://nginx.org/download/nginx-
     nginx_download_suffix: .tar.gz
     nginx_prefix: /usr/local/nginx-
@@ -21,8 +21,8 @@
     node_download_suffix: .tar.gz
 
   tasks:
-    - name: update apt
-      action: command /usr/bin/apt-get update
+    # - name: update apt
+    #   action: command /usr/bin/apt-get update
 
     - name: install web server packages
       action: apt pkg=$item state=installed
@@ -62,12 +62,12 @@
         - wget
         - zlib1g
 
-    # - include: includes/php.yml
+    - include: includes/php.yml
+    - include: includes/nginx.yml
+    - include: includes/node.yml
     - include: includes/newrelic.yml
     - include: includes/newrelic-php.yml
     - include: includes/newrelic-nginx.yml
-    - include: includes/nginx.yml
-    - include: includes/node.yml
 
     - name: Clear old firewall rules
       action: command /usr/sbin/ufw disable && /usr/sbin/ufw --force reset

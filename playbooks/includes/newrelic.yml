@@ -1,7 +1,7 @@
 ---
 
 - name: Download NewRelic key
- action: apt_key url=http://download.newrelic.com/548C16BF.gpg state=present
+  action: apt_key url=http://download.newrelic.com/548C16BF.gpg state=present
 
 - name: Add NewRelic repo
   command: sh -c 'echo "deb http://apt.newrelic.com/debian/ newrelic non-free" > /etc/apt/sources.list.d/newrelic.list'

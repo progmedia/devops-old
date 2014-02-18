@@ -7,7 +7,13 @@
 
 - name: Add xdebug to php.ini
   ini_file: >
-    dest=${php_ini_location}${php_version}/php.ini
+    dest=${php_ini_location}/php.ini
     section=PHP
     option=zend_extension
     value=xdebug.so
+
+- name: How often should Opcache check for updated code
+  ini_file: >
+    dest=${php_ini_location}/php.ini
+    section=PHP
+    option=opcache.validate_timestamps
