@@ -19,13 +19,19 @@
       command: service nginx stop
 
     - name: Remove the old symlink if it exists
-      command: rm -f ${symlink_file}
+      command: >
+        rm -f ${symlink_file}
+        chdir=/web
 
     - name: mkdir new_folder
-      command: mkdir ${new_folder}
+      command: >
+        mkdir ${new_folder}
+        chdir=/web
 
     - name: Unzip into new_folder
-      command: tar xzf ${tarball_file} -C ${new_folder}
+      command: >
+        tar xzf ${tarball_file} -C ${new_folder}
+        chdir=/web
 
     - name: Symlink symlink_file to new_folder
       file: >
@@ -34,6 +40,7 @@
         owner=${php_fpm_user}
         group=${php_fpm_group}
         state=link
+        chdir=/web
 
     - name: Restart nginx
       command: service nginx start
