@@ -35,12 +35,11 @@
 
     - name: Symlink symlink_file to new_folder
       file: >
-        src=${new_folder}
-        dest=${symlink_file}
+        src=/web/${new_folder}
+        dest=/web/${symlink_file}
         owner=${php_fpm_user}
         group=${php_fpm_group}
         state=link
-        chdir=/web
 
     - name: Restart nginx
       command: service nginx start
