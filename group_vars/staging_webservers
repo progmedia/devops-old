@@ -2,7 +2,7 @@ vg_domain: staging.videogamer.com
 api_domain: staging.api.pro-gmedia.com
 
 vg_web_root: /web/${vg_domain}
-api_web_root: /web/${api_domain}
+api_web_root: /web/staging-api-pro-gmedia.com-latest
 
 api_app_url: http://${api_domain}
 
