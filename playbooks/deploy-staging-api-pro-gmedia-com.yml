@@ -43,5 +43,7 @@
         group=${php_fpm_group}
         state=link
 
+    - include: includes/composer-update.yml
+
     - name: Restart nginx
       command: service nginx start
