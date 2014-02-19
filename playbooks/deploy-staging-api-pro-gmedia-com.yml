@@ -35,6 +35,11 @@
         tar xzf ${tarball_file} -C ${new_folder}
         chdir=/web
 
+    - name: Remove the tarball
+      command: >
+        rm ${tarball_file}
+        chdir=/web
+
     - name: Symlink symlink_file to new_folder
       file: >
         src=/web/${new_folder}
