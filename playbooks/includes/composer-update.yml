@@ -1,14 +1,9 @@
 ---
 
-- hosts: staging_webservers
-  user: developer
-  sudo: true
+- name: Update composer
+  action: command /usr/local/bin/composer self-update
 
-  tasks:
-    - name: Update composer
-      action: command /usr/local/bin/composer self-update
-
-    - name: Update packages for staging.api.pro-gmedia.com
-      action: >
-        command /usr/local/bin/composer install
-        chdir=/web/staging-api-pro-gmedia.com-latest
+- name: Update packages for staging.api.pro-gmedia.com
+  action: >
+    command /usr/local/bin/composer install
+    chdir=/web/staging-api-pro-gmedia.com-latest
