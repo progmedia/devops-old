@@ -96,12 +96,6 @@
 - name: Make /web dir
   command: mkdir /web creates=/web
 
-- name: Make /web/staging.videogamer.com dir
-  command: mkdir /web creates=/web/staging.videogamer.com
-
-- name: Make /web/staging.api.pro-gmedia.com dir
-  command: mkdir /web creates=/web/staging.api.pro-gmedia.com
-
 - name: Add migration script PHP include
   template: >
     src=templates/web/migration-includes.php
