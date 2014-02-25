@@ -57,4 +57,4 @@
       command: service nginx start
 
     - name: Restart php-fpm
-      command: service php-${php_version}-fpm restart
+      command: service php-5.5.9-fpm restart
