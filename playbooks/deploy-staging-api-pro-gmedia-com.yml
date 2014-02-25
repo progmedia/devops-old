@@ -35,6 +35,11 @@
         tar xzf ${tarball_file} -C ${new_folder}
         chdir=/web
 
+    - name: Change ownership of web dir
+      command: >
+        chown -R ${php_fpm_user}:${php_fpm_group} ${new_folder}
+        chdir=/web
+
     - name: Remove the tarball
       command: >
         rm ${tarball_file}
