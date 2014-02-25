@@ -55,3 +55,6 @@
 
     - name: Restart nginx
       command: service nginx start
+
+    - name: Restart php-fpm
+      command: service php-${php_version}-fpm restart
