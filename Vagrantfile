@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
 
-    config.vm.box = "ubuntu64-191113"
+    config.vm.box = "ubuntu64-270214"
     config.vm.box_url = "https://dl.dropboxusercontent.com/s/wtppn7w5o70r99s/ubuntu64-191113.box"
 
     config.vm.define "web" do |web_config|
@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
     config.vm.define "db" do |db_config|
         db_config.vm.network "forwarded_port", guest: 7474, host: 8081 # Neo4j webadmin
         db_config.vm.network "forwarded_port", guest: 9200, host: 8082 # Elasticsearch HTTP
-	db_config.vm.network "forwarded_port", guest: 6379, host: 8083 # Redis 
+	    db_config.vm.network "forwarded_port", guest: 6379, host: 8083 # Redis
         db_config.vm.network "private_network", ip: "192.168.100.20"
 
         db_config.vm.provider "virtualbox" do |v|
