@@ -2,14 +2,14 @@
 
 - name: Add vg.creo.prog conf (REMOTE)
   template: >
-    src=templates/nginx/webvg-remote.conf
+    src=templates/etc/nginx/sites-available/webvg-remote.conf
     dest=/etc/nginx-{{ nginx_version }}/sites-available/webvg-remote.conf
     owner={{ php_fpm_user }}
     group={{ php_fpm_group }}
 
 - name: Add remote.api.creo.prog conf (REMOTE)
   template: >
-    src=templates/nginx/webapi-remote.conf
+    src=templates/etc/nginx/sites-available/webapi-remote.conf
     dest=/etc/nginx-{{ nginx_version }}/sites-available/webapi-remote.conf
     owner={{ php_fpm_user }}
     group={{ php_fpm_group }}
@@ -35,6 +35,22 @@
     dest=/etc/hosts
     regexp=^{{ remote_api_domain }}
     line='127.0.0.1   {{ remote_api_domain }}'
+
+- name: Symlink /vagrant/www/creo-api-application to /web/api.creo.prog
+  file: >
+    src=/vagrant/www/creo-api-application
+    dest=/web/api.creo.prog
+    owner={{ php_fpm_user }}
+    group={{ php_fpm_group }}
+    state=link
+
+- name: Symlink /vagrant/www/videogamer-client-application to /web/vg.creo.prog
+  file: >
+    src=/vagrant/www/videogamer-client-application
+    dest=/web/vg.creo.prog
+    owner={{ php_fpm_user }}
+    group={{ php_fpm_group }}
+    state=link
 
 - name: Restart Nginx
   command: service nginx restart
