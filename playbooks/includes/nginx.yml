@@ -2,23 +2,23 @@
 
 - name: Make Nginx dir
   command: >
-    mkdir /etc/nginx-${nginx_version}
-    creates=/etc/nginx-${nginx_version}
+    mkdir /etc/nginx-{{ nginx_version }}
+    creates=/etc/nginx-{{ nginx_version }}
 
 - name: Make Nginx global dir
   command: >
-    mkdir /etc/nginx-${nginx_version}/global
-    creates=/etc/nginx-${nginx_version}/global
+    mkdir /etc/nginx-{{ nginx_version }}/global
+    creates=/etc/nginx-{{ nginx_version }}/global
 
 - name: Make Nginx sites-available dir
   command: >
-    mkdir /etc/nginx-${nginx_version}/sites-available
-    creates=/etc/nginx-${nginx_version}/sites-available
+    mkdir /etc/nginx-{{ nginx_version }}/sites-available
+    creates=/etc/nginx-{{ nginx_version }}/sites-available
 
 - name: Make Nginx sites-enabled dir
   command: >
-    mkdir /etc/nginx-${nginx_version}/sites-enabled
-    creates=/etc/nginx-${nginx_version}/sites-enabled
+    mkdir /etc/nginx-{{ nginx_version }}/sites-enabled
+    creates=/etc/nginx-{{ nginx_version }}/sites-enabled
 
 - name: Make Nginx logs dir
   command: >
@@ -27,67 +27,67 @@
 
 - name: Download Nginx
   command: >
-    curl -O ${nginx_download_url}${nginx_version}${nginx_download_suffix}
+    curl -O {{ nginx_download_url }}{{ nginx_version }}{{ nginx_download_suffix }}
     chdir=/usr/src
-    creates=/usr/src/nginx-${nginx_version}${nginx_download_suffix}
+    creates=/usr/src/nginx-{{ nginx_version }}{{ nginx_download_suffix }}
 
 - name: Unzip Nginx
   command: >
-    tar -xzf /usr/src/nginx-${nginx_version}${nginx_download_suffix}
+    tar -xzf /usr/src/nginx-{{ nginx_version }}{{ nginx_download_suffix }}
     chdir=/usr/src
-    creates=/usr/src/nginx-${nginx_version}
+    creates=/usr/src/nginx-{{ nginx_version }}
 
 - name: Configure Nginx
   command: >
-    ./configure --prefix=${nginx_prefix}${nginx_version} --pid-path=${nginx_prefix}${nginx_version}/logs/nginx.pid --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --conf-path=/etc/nginx-${nginx_version}/nginx.conf --with-pcre --with-http_ssl_module --with-http_realip_module --with-http_stub_status_module
-    chdir=/usr/src/nginx-${nginx_version}
-    creates=${nginx_prefix}${nginx_version}/sbin/nginx
+    ./configure --prefix={{ nginx_prefix }}{{ nginx_version }} --pid-path={{ nginx_prefix }}{{ nginx_version }}/logs/nginx.pid --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --conf-path=/etc/nginx-{{ nginx_version }}/nginx.conf --with-pcre --with-http_ssl_module --with-http_realip_module --with-http_stub_status_module
+    chdir=/usr/src/nginx-{{ nginx_version }}
+    creates={{ nginx_prefix }}{{ nginx_version }}/sbin/nginx
 
 - name: Make Nginx
   command: >
-    make chdir=/usr/src/nginx-${nginx_version}
-    creates=${nginx_prefix}${nginx_version}/sbin/nginx
+    make chdir=/usr/src/nginx-{{ nginx_version }}
+    creates={{ nginx_prefix }}{{ nginx_version }}/sbin/nginx
 
 - name: Install Nginx
   command: >
-    make install chdir=/usr/src/nginx-${nginx_version}
-    creates=${nginx_prefix}${nginx_version}/sbin/nginx
+    make install chdir=/usr/src/nginx-{{ nginx_version }}
+    creates={{ nginx_prefix }}{{ nginx_version }}/sbin/nginx
 
 - name: Update nginx.conf
   template: >
     src=templates/etc/nginx/nginx.conf
-    dest=/etc/nginx-${nginx_version}/nginx.conf
-    owner=${php_fpm_user}
-    group=${php_fpm_group}
+    dest=/etc/nginx-{{ nginx_version }}/nginx.conf
+    owner={{ php_fpm_user }}
+    group={{ php_fpm_group }}
 
 - name: Add vg.creo.prog conf
   template: >
     src=templates/etc/nginx/sites-available/webvg.conf
-    dest=/etc/nginx-${nginx_version}/sites-available/webvg.conf
-    owner=${php_fpm_user}
-    group=${php_fpm_group}
+    dest=/etc/nginx-{{ nginx_version }}/sites-available/webvg.conf
+    owner={{ php_fpm_user }}
+    group={{ php_fpm_group }}
 
 - name: Add api.creo.prog conf
   template: >
     src=templates/etc/nginx/sites-available/webapi.conf
-    dest=/etc/nginx-${nginx_version}/sites-available/webapi.conf
-    owner=${php_fpm_user}
-    group=${php_fpm_group}
+    dest=/etc/nginx-{{ nginx_version }}/sites-available/webapi.conf
+    owner={{ php_fpm_user }}
+    group={{ php_fpm_group }}
 
 - name: Symlink vg.creo.prog conf
   file: >
-    src=/etc/nginx-${nginx_version}/sites-available/webvg.conf
-    dest=/etc/nginx-${nginx_version}/sites-enabled/webvg.conf
-    owner=${php_fpm_user}
-    group=${php_fpm_group}
+    src=/etc/nginx-{{ nginx_version }}/sites-available/webvg.conf
+    dest=/etc/nginx-{{ nginx_version }}/sites-enabled/webvg.conf
+    owner={{ php_fpm_user }}
+    group={{ php_fpm_group }}
     state=link
 
 - name: Symlink api.creo.prog conf
   file: >
-    src=/etc/nginx-${nginx_version}/sites-available/webapi.conf
-    dest=/etc/nginx-${nginx_version}/sites-enabled/webapi.conf
-    owner=${php_fpm_user}
-    group=${php_fpm_group}
+    src=/etc/nginx-{{ nginx_version }}/sites-available/webapi.conf
+    dest=/etc/nginx-{{ nginx_version }}/sites-enabled/webapi.conf
+    owner={{ php_fpm_user }}
+    group={{ php_fpm_group }}
     state=link
 
 - name: Remove old web directory
@@ -100,27 +100,27 @@
   template: >
     src=templates/web/migration-includes.php
     dest=/web/migration-includes.php
-    owner=${php_fpm_user}
-    group=${php_fpm_group}
+    owner={{ php_fpm_user }}
+    group={{ php_fpm_group }}
 
 - name: Add htpasswd file
   template: >
     src=templates/web/htpasswd
     dest=/web/htpasswd
-    owner=${php_fpm_user}
-    group=${php_fpm_group}
+    owner={{ php_fpm_user }}
+    group={{ php_fpm_group }}
 
 - name: Add API domain to hosts file
   lineinfile: >
     dest=/etc/hosts
-    regexp=^${api_domain}
-    line='127.0.0.1   ${api_domain}'
+    regexp=^{{ api_domain }}
+    line='127.0.0.1   {{ api_domain }}'
 
 - name: Chmod migration script PHP include
   command: chmod 777 /web/migration-includes.php
 
 - name: chown /web
-  command: chown -R ${php_fpm_user}:${php_fpm_group} /web
+  command: chown -R {{ php_fpm_user }}:{{ php_fpm_group }} /web
 
 - name: Add nginx init script
   template: >

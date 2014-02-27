@@ -14,43 +14,43 @@
   tasks:
     - name: Copy the staging-api-pro-gmedia-com.tar.gz to the webserver
       copy: >
-        src=/home/developer/staging-files/${tarball_file}
-        dest=/web/${tarball_file}
+        src=/home/developer/staging-files/{{ tarball_file }}
+        dest=/web/{{ tarball_file }}
 
     - name: Stop nginx
       command: service nginx stop
 
     - name: Remove the old symlink if it exists
       command: >
-        rm -f ${symlink_file}
+        rm -f {{ symlink_file }}
         chdir=/web
 
     - name: mkdir new_folder
       command: >
-        mkdir ${new_folder}
+        mkdir {{ new_folder }}
         chdir=/web
 
     - name: Unzip into new_folder
       command: >
-        tar xzf ${tarball_file} -C ${new_folder}
+        tar xzf {{ tarball_file }} -C {{ new_folder }}
         chdir=/web
 
     - name: Change ownership of web dir
       command: >
-        chown -R ${php_fpm_user}:${php_fpm_group} ${new_folder}
+        chown -R {{ php_fpm_user }}:{{ php_fpm_group }} {{ new_folder }}
         chdir=/web
 
     - name: Remove the tarball
       command: >
-        rm ${tarball_file}
+        rm {{ tarball_file }}
         chdir=/web
 
     - name: Symlink symlink_file to new_folder
       file: >
-        src=/web/${new_folder}
-        dest=/web/${symlink_file}
-        owner=${php_fpm_user}
-        group=${php_fpm_group}
+        src=/web/{{ new_folder }}
+        dest=/web/{{ symlink_file }}
+        owner={{ php_fpm_user }}
+        group={{ php_fpm_group }}
         state=link
 
     - name: Restart nginx

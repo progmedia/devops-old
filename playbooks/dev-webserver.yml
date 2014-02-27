@@ -5,8 +5,8 @@
   sudo: True
 
   vars:
-    php_version: 5.5.6
-    php_ini_location: /etc/php-5.5.6
+    php_version: 5.5.9
+    php_ini_location: /etc/php-5.5
     php_download_url: http://www.php.net/distributions/php-
     php_download_suffix: .tar.gz
     php_fpm_user: www-data
@@ -17,7 +17,7 @@
     nginx_download_suffix: .tar.gz
     nginx_prefix: /usr/local/nginx-
     node_version: 0.10.22
-    node_download_url: http://nodejs.org/dist/v${node_version}/node-v${node_version}-linux-x64
+    node_download_url: http://nodejs.org/dist/v{{ node_version }}/node-v{{ node_version }}-linux-x64
     node_download_suffix: .tar.gz
 
   tasks:

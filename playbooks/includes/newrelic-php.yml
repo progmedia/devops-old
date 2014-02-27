@@ -5,14 +5,14 @@
 
 - name: Add newrelic application name ini setting
   ini_file: >
-    dest=${php_ini_location}/php.ini
+    dest={{ php_ini_location }}/php.ini
     section=PHP
     option=newrelic.appname
-    value="php-${ansible_eth0.ipv4.address}"
+    value="php-{{ ansible_eth0.ipv4.address }}"
     state=present
 
 - name: Restart PHP-FPM
-  command: service php-${php_version}-fpm restart
+  command: service php-{{ php_version }}-fpm restart
 
 - name: Restart Nginx
   command: service nginx restart

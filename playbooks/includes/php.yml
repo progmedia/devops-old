@@ -3,46 +3,46 @@
 - name: Set php.ini
   action: >
     copy src=templates/etc/php-5.5/php.ini
-    dest=${php_ini_location}/php.ini
-    owner=${php_fpm_user}
-    group=${php_fpm_group}
+    dest={{ php_ini_location }}/php.ini
+    owner={{ php_fpm_user }}
+    group={{ php_fpm_group }}
 
 - name: Create fpm location
   command: >
-    mkdir ${php_ini_location}/fpm
-    creates=${php_ini_location}/fpm
+    mkdir {{ php_ini_location }}/fpm
+    creates={{ php_ini_location }}/fpm
 
 - name: Set fpm conf
   template: >
     src=templates/etc/php-5.5/php-fpm.conf
-    dest=${php_ini_location}/php-fpm.conf
-    owner=${php_fpm_user}
-    group=${php_fpm_group}
+    dest={{ php_ini_location }}/php-fpm.conf
+    owner={{ php_fpm_user }}
+    group={{ php_fpm_group }}
 
 - name: Create pool location
   command: >
-    mkdir ${php_ini_location}/pools
-    creates=${php_ini_location}/pools
+    mkdir {{ php_ini_location }}/pools
+    creates={{ php_ini_location }}/pools
 
 - name: Set fpm pool conf
   template: >
     src=templates/etc/php-5.5/pools/pool.conf
-    dest=${php_ini_location}/pools/pool.conf
-    owner=${php_fpm_user}
-    group=${php_fpm_group}
+    dest={{ php_ini_location }}/pools/pool.conf
+    owner={{ php_fpm_user }}
+    group={{ php_fpm_group }}
 
 - name: Set init script
   template: >
     src=templates/etc/init.d/php5-fpm.init
-    dest=/etc/init.d/php-${php_version}-fpm
+    dest=/etc/init.d/php-{{ php_version }}-fpm
     owner=root
     group=root
 
 - name: Chmod init script
-  command: chmod +x /etc/init.d/php-${php_version}-fpm
+  command: chmod +x /etc/init.d/php-{{ php_version }}-fpm
 
 - name: Add php5-fpm init script to upstart
-  command: update-rc.d php-${php_version}-fpm defaults
+  command: update-rc.d php-{{ php_version }}-fpm defaults
 
 - name: Restart php5-fpm
-  command: service php-${php_version}-fpm restart
+  command: service php-{{ php_version }}-fpm restart
