@@ -17,9 +17,6 @@
         src=/home/developer/staging-files/{{ tarball_file }}
         dest=/web/{{ tarball_file }}
 
-    - name: Stop nginx
-      command: service nginx stop
-
     - name: Remove the old symlink if it exists
       command: >
         rm -f {{ symlink_file }}
@@ -54,4 +51,4 @@
         state=link
 
     - name: Restart nginx
-      command: service nginx start
+      command: service nginx restart
