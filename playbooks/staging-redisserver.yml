@@ -34,7 +34,8 @@
       action: command /usr/sbin/ufw allow proto tcp from $item to any port 6379
       with_items:
         - ${groups.staging_webservers}
-        - 82.136.1.154
+        - 82.136.1.154 # office
+        - 82.136.37.202 # bamboo server
 
   handlers:
     - name: Restart redis

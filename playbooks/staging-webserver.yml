@@ -83,7 +83,8 @@
     - name: Allow webservers access
       action: command /usr/sbin/ufw allow proto tcp from $item to any port 80
       with_items:
-        - 82.136.1.154
+        - 82.136.1.154 # office
+        - 82.136.37.202 # bamboo server
 
   handlers:
     - name: Restart nginx

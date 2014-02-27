@@ -32,7 +32,8 @@
       with_items:
         - ${groups.staging_webservers}
         - ${groups.jenkins}
-        - 82.136.1.154
+        - 82.136.1.154 # office
+        - 82.136.37.202 # bamboo server
 
     - name: Enable firewall rules
       action: command /usr/sbin/ufw --force enable
