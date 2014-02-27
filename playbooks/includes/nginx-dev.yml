@@ -52,5 +52,16 @@
     group={{ php_fpm_group }}
     state=link
 
+- name: Disable Opcache
+  ini_file: >
+    dest={{ php_ini_location }}/php.ini
+    section=PHP
+    option=opcache.enable
+    value="Off"
+    state=present
+
+- name: Restart php5-fpm
+  command: service php-{{ php_version }}-fpm restart
+
 - name: Restart Nginx
   command: service nginx restart
