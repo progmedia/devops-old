@@ -19,7 +19,7 @@
     - name: update apt
       action: command /usr/bin/apt-get update
 
-    - include: includes/neo4j.yml
+    #- include: includes/neo4j.yml
     - include: includes/redis.yml
     - include: includes/elastic.yml
 
