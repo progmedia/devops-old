@@ -1,0 +1,40 @@
+---
+
+- hosts: staging_webservers
+  remote_user: ansible
+  sudo: true
+
+  vars:
+    new_folder: staging-videogamer-com
+    tarball_file: staging-videogamer-com.tar.gz
+    php_fpm_user: www-data
+    php_fpm_group: www-data
+
+  tasks:
+    - name: Remove the old previous version of the code
+      command: >
+        rm -rf {{ new_folder }}-previous
+        chdir=/web
+
+    - name: Move the currently deployed code to -previous folder
+      command: >
+        mv {{ new_folder }} {{ new_folder }}-previous
+        chdir=/web
+
+    - name: Unzip into new_folder
+      command: >
+        tar xzf {{ tarball_file }} -C {{ new_folder }}
+        chdir=/web
+
+    - name: Remove the tarball
+      command: >
+        rm {{ tarball_file }}
+        chdir=/web
+
+    - name: Change ownership of web dir
+      command: >
+        chown -R {{ php_fpm_user }}:{{ php_fpm_group }} {{ new_folder }}
+        chdir=/web
+
+    - name: Flush the PHP opcache
+      command: curl http://{{ api_domain }}/cache_buster.php
