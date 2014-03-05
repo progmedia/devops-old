@@ -5,26 +5,20 @@
   sudo: true
 
   vars:
-    new_folder: "staging-api-pro-gmedia.com-{{ lookup('pipe','date +%Y%m%d-%H%M') }}"
+    new_folder: staging-api-pro-gmedia-com
     tarball_file: staging-api-pro-gmedia-com.tar.gz
-    symlink_file: staging-api-pro-gmedia.com-latest
     php_fpm_user: www-data
     php_fpm_group: www-data
 
   tasks:
-    - name: Copy the staging-api-pro-gmedia-com.tar.gz to the webserver
-      copy: >
-        src=/home/developer/staging-files/{{ tarball_file }}
-        dest=/web/{{ tarball_file }}
-
-    - name: Remove the old symlink if it exists
+    - name: Remove the old previous version of the code
       command: >
-        rm -f {{ symlink_file }}
+        rm -rf {{ new_folder }}-previous
         chdir=/web
 
-    - name: mkdir new_folder
+    - name: Move the currently deployed code to -previous folder
       command: >
-        mkdir {{ new_folder }}
+        mv {{ new_folder }} {{ new_folder }}-previous
         chdir=/web
 
     - name: Unzip into new_folder
@@ -32,23 +26,15 @@
         tar xzf {{ tarball_file }} -C {{ new_folder }}
         chdir=/web
 
-    - name: Change ownership of web dir
-      command: >
-        chown -R {{ php_fpm_user }}:{{ php_fpm_group }} {{ new_folder }}
-        chdir=/web
-
     - name: Remove the tarball
       command: >
         rm {{ tarball_file }}
         chdir=/web
 
-    - name: Symlink symlink_file to new_folder
-      file: >
-        src=/web/{{ new_folder }}
-        dest=/web/{{ symlink_file }}
-        owner={{ php_fpm_user }}
-        group={{ php_fpm_group }}
-        state=link
+    - name: Change ownership of web dir
+      command: >
+        chown -R {{ php_fpm_user }}:{{ php_fpm_group }} {{ new_folder }}
+        chdir=/web
 
-    - name: Restart nginx
-      command: service nginx restart
+    - name: Flush the PHP opcache
+      command: curl http://{{ api_domain }}/cache_buster.php
