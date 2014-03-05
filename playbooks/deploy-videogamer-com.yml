@@ -5,8 +5,8 @@
   sudo: true
 
   vars:
-    new_folder: staging-api-pro-gmedia-com
-    tarball_file: staging-api-pro-gmedia-com.tar.gz
+    new_folder: staging-videogamer-com
+    tarball_file: staging-videogamer-com.tar.gz
     php_fpm_user: www-data
     php_fpm_group: www-data
 
