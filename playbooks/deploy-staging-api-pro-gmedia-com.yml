@@ -21,6 +21,11 @@
         mv {{ new_folder }} {{ new_folder }}-previous
         chdir=/web
 
+    - name: Copy the tarball to the webserver
+      copy: >
+        src=/home/developer/staging-files/{{ tarball_file }}
+        dest=/web/{{ tarball_file }}
+
     - name: Unzip into new_folder
       command: >
         tar xzf {{ tarball_file }} -C {{ new_folder }}
