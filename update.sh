@@ -32,6 +32,7 @@ for d in $FILES; do
 	echo -e "\033[36mPulling $DIR\033[0m"
 	cd $DIR
 	git pull
+	composer up
     fi
 done
 
