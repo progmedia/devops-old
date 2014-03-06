@@ -28,11 +28,11 @@ echo -e "\033[32mPulling all git directories in $DIR\033[0m"
 for d in $FILES; do
     if [[ "$d" != *\/vendor\/* ]]
     then
-	DIR=${d%/*}
-	echo -e "\033[36mPulling $DIR\033[0m"
-	cd $DIR
-	git pull
-	composer up
+    	DIR=${d%/*}
+    	echo -e "\033[36mPulling $DIR\033[0m"
+    	cd $DIR
+    	git pull
+        composer up
     fi
 done
 
