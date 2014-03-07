@@ -13,12 +13,12 @@
   tasks:
     - name: Remove the old previous version of the code
       command: >
-        rm -rf {{ new_folder }}-previous
+        rm -rf {{ new_folder }}-previous &> /dev/null
         chdir=/web
 
     - name: Move the currently deployed code to -previous folder
       command: >
-        mv {{ new_folder }} {{ new_folder }}-previous
+        mv {{ new_folder }} {{ new_folder }}-previous &> /dev/null
         chdir=/web
 
     - name: Copy the tarball to the webserver
