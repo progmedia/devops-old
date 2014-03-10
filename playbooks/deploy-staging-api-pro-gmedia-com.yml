@@ -12,10 +12,17 @@
 
   tasks:
 
+    - name: Chmod the folder so we can write to it
+      command: >
+        chmod -R 777 /web/{{ new_folder }}
+
     - name: Rsync the folder
-      copy: >
-        src=/var/lib/jenkins/workspace/deploy-staging.api.pro-gmedia.com/{{ new_folder }}
+      synchronize: >
+        src=/var/lib/jenkins/workspace/deploy-staging.api.pro-gmedia.com/api-application-temp
         dest=/web/{{ new_folder }}
+        recursive=yes
+        delete=yes
+
 
     - name: Change ownership of web dir
       command: >
