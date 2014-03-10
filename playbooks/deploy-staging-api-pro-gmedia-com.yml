@@ -25,7 +25,7 @@
 
     - name: Copy the tarball to the webserver
       copy: >
-        src=/var/lib/jenkins/workspace/Deploy staging.api.pro-gmedia.com/{{ tarball_file }}
+        src=/var/lib/jenkins/workspace/Deploy\ staging.api.pro-gmedia.com/{{ tarball_file }}
         dest=/web/{{ tarball_file }}
 
     - name: Unzip into new_folder
