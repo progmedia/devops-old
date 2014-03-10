@@ -11,32 +11,11 @@
     php_fpm_group: www-data
 
   tasks:
-    - name: Remove the old previous version of the code
-      command: >
-        rm -rf {{ new_folder }}-previous
-        chdir=/web
-        removes=/web/{{ new_folder }}-previous
 
-    - name: Move the currently deployed code to -previous folder
-      command: >
-        mv {{ new_folder }} {{ new_folder }}-previous
-        chdir=/web
-        removes=/web/{{ new_folder }}
-
-    - name: Copy the tarball to the webserver
+    - name: Rsync the folder
       copy: >
-        src=/var/lib/jenkins/workspace/deploy-staging.api.pro-gmedia.com/{{ tarball_file }}
-        dest=/web/{{ tarball_file }}
-
-    - name: Unzip into new_folder
-      command: >
-        tar xzf {{ tarball_file }} -C {{ new_folder }}
-        chdir=/web
-
-    - name: Remove the tarball
-      command: >
-        rm {{ tarball_file }}
-        chdir=/web
+        src=/var/lib/jenkins/workspace/deploy-staging.api.pro-gmedia.com/{{ new_folder }}
+        dest=/web/{{ new_folder }}
 
     - name: Change ownership of web dir
       command: >
