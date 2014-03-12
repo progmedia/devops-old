@@ -119,6 +119,11 @@
 - name: Chmod migration script PHP include
   command: chmod 777 /web/migration-includes.php
 
+- name: Make API web directory
+  command: >
+    mkdir /web/staging-api-pro-gmedia-com
+    creates=/web/staging-api-pro-gmedia-com
+
 - name: chown /web
   command: chown -R {{ php_fpm_user }}:{{ php_fpm_group }} /web
 
