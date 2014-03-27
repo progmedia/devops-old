@@ -7,13 +7,6 @@
     owner={{ php_fpm_user }}
     group={{ php_fpm_group }}
 
-- name: Add remote.api.creo.prog conf (REMOTE)
-  template: >
-    src=templates/etc/nginx/sites-available/webapi-remote.conf
-    dest=/etc/nginx-{{ nginx_version }}/sites-available/webapi-remote.conf
-    owner={{ php_fpm_user }}
-    group={{ php_fpm_group }}
-
 - name: Symlink vg.creo.prog conf (REMOTE)
   file: >
     src=/etc/nginx-{{ nginx_version }}/sites-available/webvg-remote.conf
@@ -22,10 +15,32 @@
     group={{ php_fpm_group }}
     state=link
 
+- name: Add remote.api.creo.prog conf (REMOTE)
+  template: >
+    src=templates/etc/nginx/sites-available/webapi-remote.conf
+    dest=/etc/nginx-{{ nginx_version }}/sites-available/webapi-remote.conf
+    owner={{ php_fpm_user }}
+    group={{ php_fpm_group }}
+
 - name: Symlink api.creo.prog conf (REMOTE)
   file: >
     src=/etc/nginx-{{ nginx_version }}/sites-available/webapi-remote.conf
     dest=/etc/nginx-{{ nginx_version }}/sites-enabled/webapi-remote.conf
+    owner={{ php_fpm_user }}
+    group={{ php_fpm_group }}
+    state=link
+
+- name: Add remote.scaffolding.creo.prog conf (REMOTE)
+  template: >
+    src=templates/etc/nginx/sites-available/webscaffolding-remote.conf
+    dest=/etc/nginx-{{ nginx_version }}/sites-available/webscaffolding-remote.conf
+    owner={{ php_fpm_user }}
+    group={{ php_fpm_group }}
+
+- name: Symlink scaffolding.creo.prog conf (REMOTE)
+  file: >
+    src=/etc/nginx-{{ nginx_version }}/sites-available/webscaffolding-remote.conf
+    dest=/etc/nginx-{{ nginx_version }}/sites-enabled/webscaffolding-remote.conf
     owner={{ php_fpm_user }}
     group={{ php_fpm_group }}
     state=link
@@ -48,6 +63,14 @@
   file: >
     src=/vagrant/www/videogamer-client-application
     dest=/web/vg.creo.prog
+    owner={{ php_fpm_user }}
+    group={{ php_fpm_group }}
+    state=link
+
+- name: Symlink /vagrant/www/scaffolding to /web/scaffolding.creo.prog
+  file: >
+    src=/vagrant/www/scaffolding
+    dest=/web/scaffolding.creo.prog
     owner={{ php_fpm_user }}
     group={{ php_fpm_group }}
     state=link

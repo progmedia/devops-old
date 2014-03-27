@@ -74,6 +74,13 @@
     owner={{ php_fpm_user }}
     group={{ php_fpm_group }}
 
+- name: Add scaffolding.creo.prog conf
+  template: >
+    src=templates/etc/nginx/sites-available/webscaffolding.conf
+    dest=/etc/nginx-{{ nginx_version }}/sites-available/webscaffolding.conf
+    owner={{ php_fpm_user }}
+    group={{ php_fpm_group }}
+
 - name: Symlink vg.creo.prog conf
   file: >
     src=/etc/nginx-{{ nginx_version }}/sites-available/webvg.conf
@@ -86,6 +93,14 @@
   file: >
     src=/etc/nginx-{{ nginx_version }}/sites-available/webapi.conf
     dest=/etc/nginx-{{ nginx_version }}/sites-enabled/webapi.conf
+    owner={{ php_fpm_user }}
+    group={{ php_fpm_group }}
+    state=link
+
+- name: Symlink scaffolding.creo.prog conf
+  file: >
+    src=/etc/nginx-{{ nginx_version }}/sites-available/webscaffolding.conf
+    dest=/etc/nginx-{{ nginx_version }}/sites-enabled/webscaffolding.conf
     owner={{ php_fpm_user }}
     group={{ php_fpm_group }}
     state=link
