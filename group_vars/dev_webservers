@@ -1,11 +1,14 @@
 vg_domain: vg.creo.prog
 api_domain: api.creo.prog
+scaffolding_domain: scaffolding.creo.prog
 
 remote_vg_domain: remote.${vg_domain}
 remote_api_domain: remote.${api_domain}
+remote_scaffolding_domain: remote.${scaffolding_domain}
 
 vg_web_root: /web/${vg_domain}
 api_web_root: /web/${api_domain}
+scaffolding_web_root: /web/${scaffolding_domain}
 
 api_app_url: http://${api_domain}
 remote_api_app_url: http://remote.${api_domain}
