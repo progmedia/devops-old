@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
         web_config.vm.synced_folder "../migration-scripts", "/vagrant/migrate/"
         web_config.vm.synced_folder "../creo-api", "/vagrant/creo-api/"
         web_config.vm.synced_folder "../client-application-bridge", "/vagrant/client-application-bridge/"
-        web_config.vm.synced_folder "../www", "/vagrant/www/"
+        web_config.vm.synced_folder "../www", "/vagrant/www/", group: "www-data", owner: "www-data"
 
         web_config.vm.provider "virtualbox" do |v|
             v.customize ["modifyvm", :id, "--memory", "512"]
