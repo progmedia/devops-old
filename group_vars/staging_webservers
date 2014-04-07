@@ -2,7 +2,7 @@ vg_domain: staging.videogamer.com
 api_domain: staging.api.pro-gmedia.com
 scaffolding_domain: scaffolding.pro-gmedia.com
 
-vg_web_root: /web/staging-videogamer-com
+vg_web_root: /web/staging-videogamer-com/videogamer-client-application-temp
 api_web_root: /web/staging-api-pro-gmedia-com/api-application-temp
 scaffolding_web_root: /web/${scaffolding_domain}
 
