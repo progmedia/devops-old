@@ -11,30 +11,24 @@
     php_fpm_group: www-data
 
   tasks:
-    - name: Remove the old previous version of the code
-      command: >
-        rm -rf {{ new_folder }}-previous
-        chdir=/web
 
-    - name: Move the currently deployed code to -previous folder
+    - name: Chmod the folder so we can write to it
       command: >
-        mv {{ new_folder }} {{ new_folder }}-previous
-        chdir=/web
+        chmod -R 777 /web/{{ new_folder }}
 
-    - name: Copy the tarball to the webserver
-      copy: >
-        src=/home/developer/staging-files/{{ tarball_file }}
-        dest=/web/{{ tarball_file }}
-
-    - name: Unzip into new_folder
+    - name: Chown the folder so we can write to it
       command: >
-        tar xzf {{ tarball_file }} -C {{ new_folder }}
-        chdir=/web
+        chown -R ansible:ansible /web/{{ new_folder }}
 
-    - name: Remove the tarball
-      command: >
-        rm {{ tarball_file }}
-        chdir=/web
+    - name: Rsync the folder
+      synchronize: >
+        src=/var/lib/jenkins/jobs/deploy-staging.videogamer.com/videogamer-client-application-temp
+        dest=/web/{{ new_folder }}
+        recursive=yes
+        delete=yes
+        times=no
+        owner=no
+        group=no
 
     - name: Change ownership of web dir
       command: >
