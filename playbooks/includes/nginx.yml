@@ -139,6 +139,11 @@
     mkdir /web/staging-api-pro-gmedia-com
     creates=/web/staging-api-pro-gmedia-com
 
+- name: Make client web directory
+  command: >
+    mkdir /web/staging-videogamer-com
+    creates=/web/staging-videogamer-com
+
 - name: chown /web
   command: chown -R {{ php_fpm_user }}:{{ php_fpm_group }} /web
 
