@@ -22,7 +22,7 @@
 
     - name: Rsync the folder
       synchronize: >
-        src=/var/lib/jenkins/jobs/deploy-staging.videogamer.com/videogamer-client-application-temp
+        src=/var/lib/jenkins/workspace/deploy-staging.videogamer.com/videogamer-client-application-temp
         dest=/web/{{ new_folder }}
         recursive=yes
         delete=yes
