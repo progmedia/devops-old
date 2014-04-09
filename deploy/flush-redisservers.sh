@@ -1,3 +1,3 @@
 #!/bin/sh
 
-ansible-playbook -i hosts.ini playbooks/flush-redisserver.yml -u developer --private-key=~/.ssh/id_rsa
+ansible-playbook -i hosts.ini playbooks/flush-redisserver.yml -u ansible --private-key=~/.ssh/id_rsa
