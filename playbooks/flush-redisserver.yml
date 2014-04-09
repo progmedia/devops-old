@@ -1,9 +1,9 @@
 ---
 
 - hosts: staging_redisservers
-  user: developer
+  user: ansible
 
   tasks:
 
-    - name: FLush redis
+    - name: Flush redis
       command: redis-cli FLUSHALL
