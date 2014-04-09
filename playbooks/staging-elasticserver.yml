@@ -34,6 +34,7 @@
         - ${groups.jenkins}
         - 82.136.1.154 # office
         - 82.136.37.202 # bamboo server
+        - 77.100.15.56 # phil home
 
     - name: Enable firewall rules
       action: command /usr/sbin/ufw --force enable
