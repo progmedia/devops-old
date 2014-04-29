@@ -15,11 +15,11 @@ remote_api_app_url: http://remote.{{ api_domain }}
 
 static_url: http://s.pro-gmedia.com
 
-fastcgi_param_cache_host: "{{ groups.dev_dbservers[0] }}"
+fastcgi_param_cache_host: "{{ groups.vagrant_dbservers[0] }}"
 fastcgi_param_cache_port: 6379
-fastcgi_param_neo_host: "{{ groups.dev_dbservers[0] }}"
+fastcgi_param_neo_host: "{{ groups.vagrant_dbservers[0] }}"
 fastcgi_param_neo_port: 7474
-fastcgi_param_elastic_host: "{{ groups.dev_dbservers[0] }}"
+fastcgi_param_elastic_host: "{{ groups.vagrant_dbservers[0] }}"
 fastcgi_param_elastic_port: 9200
 
 fastcgi_param_server_env: dev
