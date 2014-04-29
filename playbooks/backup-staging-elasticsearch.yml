@@ -1,0 +1,27 @@
+---
+
+- hosts: staging_elasticservers
+  user: ansible
+
+  tasks:
+
+    - name: Make backup dir
+      command: >
+        mkdir /home/elasticsearch
+        creates=/home/elasticsearch
+      sudo: True
+
+    - name: Chown backup dir
+      command: >
+        chown -R elasticsearch:elasticsearch /home/elasticsearch
+      sudo: True
+
+    - name: Create the snapshot job (it doesnt matter if it is already created)
+      command: 'curl -XPUT http://localhost:9200/_snapshot/migrations -d "{\"type\": \"fs\", \"settings\": {\"location\": \"/home/elasticsearch/migrations\", \"compress\": true}}"'
+
+    - name: Generate a new snapshot name
+      local_action: command php ../deploy/bin/get-new-snapshot-name.php
+      register: new_snapshot_name
+
+    - name: Create snapshot
+      command: curl -XPUT http://localhost:9200/_snapshot/migrations/{{new_snapshot_name.stdout}}?wait_for_completion=false
