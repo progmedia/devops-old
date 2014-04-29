@@ -1,0 +1,26 @@
+---
+
+- hosts: dev_dbservers
+  user: vagrant
+
+  tasks:
+
+    - name: Rsync the local snapshot folder
+      synchronize: >
+        src=../migrations_data
+        dest=/home/vagrant
+        recursive=yes
+        delete=yes
+        times=no
+        owner=no
+        group=no
+
+    - name: Create the snapshot job (it doesnt matter if it is already created)
+      command: 'curl -XPUT http://localhost:9200/_snapshot/migrations -d "{\"type\": \"fs\", \"settings\": {\"location\": \"/home/vagrant/migrations_data/migrations\", \"compress\": true}}"'
+
+    - name: Get the latest snapshot name
+      local_action: command php ../deploy/bin/get-latest-snapshot-name.php
+      register: latest_snapshot_name
+
+    - name: Import the latest snapshot
+      command: curl -XPOST http://localhost:9200/_snapshot/migrations/{{latest_snapshot_name.stdout}}/_restore

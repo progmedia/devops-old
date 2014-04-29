@@ -8,6 +8,7 @@ Vagrant.configure("2") do |config|
         web_config.vm.network "private_network", ip: "192.168.100.10"
 
         web_config.vm.synced_folder "../migration-scripts", "/vagrant/migrate/"
+        web_config.vm.synced_folder "../freebase-matcher", "/vagrant/freebase-matcher/"
         web_config.vm.synced_folder "../creo-api", "/vagrant/creo-api/"
         web_config.vm.synced_folder "../client-application-bridge", "/vagrant/client-application-bridge/"
         web_config.vm.synced_folder "../www", "/vagrant/www/", group: "www-data", owner: "www-data"
