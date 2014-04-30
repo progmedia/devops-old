@@ -22,5 +22,8 @@
       local_action: command php ../deploy/bin/get-latest-snapshot-name.php
       register: latest_snapshot_name
 
+    - name: Close the indexes
+      command: curl -XPOST http://localhost:9200/_all/_close
+
     - name: Import the latest snapshot
       command: curl -XPOST http://localhost:9200/_snapshot/migrations/{{latest_snapshot_name.stdout}}/_restore
