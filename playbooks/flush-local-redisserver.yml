@@ -1,0 +1,9 @@
+---
+
+- hosts: dev_dbservers
+  user: vagrant
+
+  tasks:
+
+    - name: Flush redis
+      command: redis-cli FLUSHALL
