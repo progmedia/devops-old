@@ -32,7 +32,7 @@ Vagrant.configure("2") do |config|
         db_config.vm.network "private_network", ip: "192.168.100.20"
 
         db_config.vm.provider "virtualbox" do |v|
-            v.customize ["modifyvm", :id, "--memory", "4096"]
+            v.customize ["modifyvm", :id, "--memory", "1024"]
         end
 
         db_config.vm.synced_folder "../migration-scripts", "/vagrant/migrate/"
