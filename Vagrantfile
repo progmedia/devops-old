@@ -1,7 +1,7 @@
 Vagrant.configure("2") do |config|
 
-    config.vm.box = "ubuntu64-270214a"
-    config.vm.box_url = "https://dl.dropboxusercontent.com/s/06fyyqecxu6fc0a/ubuntu64-270214a.box"
+    config.vm.box = "ubuntu64-210514"
+    config.vm.box_url = "https://dl.dropboxusercontent.com/s/l76y7yltob4r5wo/ubuntu64-210514.box"
 
     config.vm.define "web" do |web_config|
         web_config.vm.network "forwarded_port", guest: 80, host: 8080

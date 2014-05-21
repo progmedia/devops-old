@@ -14,6 +14,7 @@
         times=no
         owner=no
         group=no
+        rsync_timeout=600
 
     - name: Create the snapshot job (it doesnt matter if it is already created)
       command: 'curl -XPUT http://localhost:9200/_snapshot/migrations -d "{\"type\": \"fs\", \"settings\": {\"location\": \"/home/vagrant/migrations_data/migrations\", \"compress\": true}}"'
