@@ -23,5 +23,8 @@
     chdir=/usr/share/elasticsearch/bin
     creates=/usr/share/elasticsearch/plugins/inquisitor
 
+- name: Add elasticsearch init script to upstart
+  command: update-rc.d elasticsearch defaults
+
 - name: Start Elasticsearch
   command: service elasticsearch start
