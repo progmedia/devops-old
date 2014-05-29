@@ -2,34 +2,94 @@
 
 - hosts: dev_dbservers
   user: vagrant
+  sudo: true
+
+  vars:
+    node_version: 0.10.22
+    node_download_url: http://nodejs.org/dist/v{{ node_version }}/node-v{{ node_version }}-linux-x64
+    node_download_suffix: .tar.gz
+    indices:
+      - users
+      - genres
+      - franchises
+      - platforms
+      - people
+      - cheats
+      - sites
+      - games
+      - rewards
+      - companies
+      - analytics
+      - content
+      - notifications
+      - media
+      - characters
+      - comments
+      - ratings
 
   tasks:
 
-    - name: Rsync the local snapshot folder
-      synchronize: >
-        src=../migrations_data
-        dest=/home/vagrant
-        recursive=yes
-        delete=yes
-        times=no
-        owner=no
-        group=no
-        rsync_timeout=600
-
-    - name: Create the snapshot job (it doesnt matter if it is already created)
-      command: 'curl -XPUT http://localhost:9200/_snapshot/migrations -d "{\"type\": \"fs\", \"settings\": {\"location\": \"/home/vagrant/migrations_data/migrations\", \"compress\": true}}"'
-
-    - name: Get the latest snapshot name
-      local_action: command php ../deploy/bin/get-latest-snapshot-name.php
-      register: latest_snapshot_name
-
-    - name: Run a structure-only migration
+    - name: Download Node
       command: >
-        ./migrate etl --structure-only
-        chdir=/vagrant/migrate/
+        curl -O {{ node_download_url }}{{ node_download_suffix }}
+        chdir=/usr/local
+        creates=/usr/local/node-v{{ node_version }}-linux-x64{{ node_download_suffix }}
 
-    - name: Close the indexes
-      command: curl -XPOST http://localhost:9200/_all/_close
+    - name: Extract node
+      command: >
+        tar -xzf node-v{{ node_version }}-linux-x64{{ node_download_suffix }}
+        chdir=/usr/local
+        removes=/usr/local/node-v{{ node_version }}-linux-x64{{ node_download_suffix }}
 
-    - name: Import the latest snapshot
-      command: curl -XPOST http://localhost:9200/_snapshot/migrations/{{latest_snapshot_name.stdout}}/_restore
+    - name: Move into node/
+      command: >
+        mv node-v{{ node_version }}-linux-x64 node
+        chdir=/usr/local
+        creates=/usr/local/node
+
+    - name: Install elasticdump
+      command: >
+        /usr/local/node/bin/npm install -g elasticdump
+        creates=/usr/local/node/bin/elasticdump
+
+    - name: Add /usr/local/node/bin to path
+      lineinfile: >
+        dest=/etc/environment
+        state=present
+        backrefs=yes
+        regexp='PATH=(["]*)((?!.*?/usr/local/node/bin).*?)(["]*)$'
+        line="PATH=\1\2:/usr/local/node/bin\3"
+
+    - name: Make dump dir
+      command: >
+        mkdir /home/vagrant/es_dump
+        creates=/home/vagrant/es_dump
+      sudo: false
+
+    - name: Download indices from staging ES
+      sudo: false
+      command: >
+        /usr/local/node/bin/elasticdump --input=http://82.136.37.194:9200/{{ item }} --output={{ item }}.json
+        chdir=/home/vagrant/es_dump
+      with_items: indices
+
+    - name: Stop ES
+      command: service elasticsearch stop
+
+    - name: Remove old ES data dir
+      command: rm -rf /var/lib/elasticsearch/elasticsearch/nodes
+
+    - name: Start ES
+      command: service elasticsearch start
+
+    - wait_for: port=9200
+
+    - name: Import ES data
+      sudo: false
+      command: >
+        /usr/local/node/bin/elasticdump --bulk=true --input={{ item }}.json --output=http://127.0.0.1:9200/
+        chdir=/home/vagrant/es_dump
+      with_items: indices
+
+    - name: Flush redis
+      command: redis-cli FLUSHALL
