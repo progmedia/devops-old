@@ -66,12 +66,24 @@
         creates=/home/vagrant/es_dump
       sudo: false
 
-    - name: Download indices from staging ES
+    - name: Download data from staging ES
       sudo: false
       command: >
         /usr/local/node/bin/elasticdump --input=http://82.136.37.194:9200/{{ item }} --output={{ item }}.json
         chdir=/home/vagrant/es_dump
       with_items: indices
+
+    - name: Copy PHP command over
+      template: >
+        src=files/export_mappings.php
+        dest=/home/vagrant/es_dump/export_mappings.php
+
+    - name: Download mappings
+      command: >
+        php export_mappings.php {{ item }}
+        chdir=/home/vagrant/es_dump
+      with_items: indices
+      sudo: false
 
     - name: Stop ES
       command: service elasticsearch stop
@@ -83,6 +95,13 @@
       command: service elasticsearch start
 
     - wait_for: port=9200
+
+    - name: Create indices
+      command: >
+        curl -XPOST 'http://localhost:9200/{{item}}' -d @{{item}}_mapping.json
+        chdir=/home/vagrant/es_dump
+      with_items: indices
+      sudo: false
 
     - name: Import ES data
       sudo: false
